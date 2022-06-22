@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/09 17:30:51 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:46:52 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@ typedef struct s_env_var
 	char	*value;
 }				t_env_var;
 
-typedef struct s_shell {
+typedef	struct s_shell {
 	/* int	running; */
 	/* int	pid; */
 	char			*prompt;
 	struct termios	termios_shell;
 	t_env_var		**env;
 }				t_shell;
+
+typedef	struct s_cmd {
+	char	*function;
+	char	**arguments;
+	//redirection
+}
 
 //////////////////////////////////////////////////
 ////////////		minishell		//////////////
@@ -70,4 +76,11 @@ void		add_env_var(t_shell	*shell, char *name, char *value);
 void		set_env_var(t_shell *shell, char *name, char *value);
 void		print_env(t_shell *shell);
 void		remove_env_var(t_shell *shell, char *name);
+
+//////////////////////////////////////////////////
+////////////		tcmd			//////////////
+//////////////////////////////////////////////////
+
+t_cmd	*init_cmd(char	*function, char **arguments);
+void	destroy_cmd(t_cmd	*cmd);
 #endif
