@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   directory_handler.c                                :+:      :+:    :+:   */
+/*   builtin_basics.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/23 16:26:49 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:20:38 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	pwd(t_shell *shell, int argc, char **argv)
 {
@@ -51,15 +51,4 @@ void	cd(t_shell *shell, int argc, char **argv)
 	}
 	else
 		printf("cd: too many arguments");
-}
-
-void	env(t_shell *shell, int argc, char **argv)
-{
-	(void)argv;
-	if (argc == 1)
-	{
-		print_env(shell);
-	}
-	else
-		printf("env: too many arguments");
 }

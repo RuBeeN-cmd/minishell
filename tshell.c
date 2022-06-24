@@ -6,20 +6,25 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 12:29:47 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:27:20 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_tshell(t_shell *shell, char **env)
+t_shell	*init_tshell(char **env)
 {
+	t_shell	*shell;
+
+	shell = malloc(sizeof(t_shell));
 	shell->prompt = "> ";
 	tcgetattr(0, &shell->termios_shell);
 	shell->termios_shell.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, 0, &shell->termios_shell);
 	shell->env = init_env(env);
 	shell->pwd = getcwd(shell->pwd, 0);
+	init_builtin_list(shell);
+	return (shell);
 }
 
 void	destroy_tshell(t_shell *shell)
@@ -29,4 +34,5 @@ void	destroy_tshell(t_shell *shell)
 	shell->env = NULL;
 	if (shell->pwd)
 		free(shell->pwd);
+	free(shell);
 }

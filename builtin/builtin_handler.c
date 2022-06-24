@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 12:29:30 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:52:20 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include"../minishell.h"
 
 t_builtin	*init_builtin(char *name,
 		void	(*f)(t_shell *shell, int argc, char **argv))
@@ -23,10 +25,11 @@ t_builtin	*init_builtin(char *name,
 
 void	init_builtin_list(t_shell *shell)
 {
-	shell->builtin_list[0] = init_builtin("env", &env);
-	shell->builtin_list[1] = init_builtin("cd", &cd);
-	shell->builtin_list[2] = init_builtin("pwd", &pwd);
-	shell->builtin_list[3] = NULL;
+	shell->builtin_list[0] = init_builtin("cd", &cd);
+	shell->builtin_list[1] = init_builtin("pwd", &pwd);
+	shell->builtin_list[2] = init_builtin("env", &env);
+	shell->builtin_list[3] = init_builtin("export", &export);
+	shell->builtin_list[4] = NULL;
 }
 void	destroy_builtin_list(t_shell *shell)
 {

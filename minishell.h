@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 12:34:32 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:27:54 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <libft.h>
 # include <dirent.h>
 
-# define BUILTIN_NB 3
+# define BUILTIN_NB 4
 
 typedef struct s_env_var {
 	char	*name;
@@ -42,7 +42,7 @@ typedef	struct s_shell {
 	char			*prompt;
 	char			*pwd;
 	struct termios	termios_shell;
-	t_builtin		builtin_list[BUILTIN_NB + 1];
+	t_builtin		*builtin_list[BUILTIN_NB + 1];
 	t_env_var		**env;
 }				t_shell;
 
@@ -65,7 +65,7 @@ void	set_signal_handlers(void);
 void	receive(int signum);
 
 /********	tshell.c		***********/
-void	init_tshell(t_shell *shell, char **env);
+t_shell	*init_tshell(char **env);
 void	destroy_tshell(t_shell *shell);
 
 //////////////////////////////////////////////////
@@ -112,8 +112,8 @@ void	cd(t_shell *shell, int argc, char **argv);
 //		exit
 
 /**	builtin_env		**/
-//		unset
+void	unset(t_shell *shell, int argc, char **argv);
 void	env(t_shell *shell, int argc, char **argv);
-void	ft_export(t_shell *shell, char **cmd);
+void	export(t_shell *shell, int argc, char **argv);
 
 #endif
