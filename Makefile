@@ -1,4 +1,4 @@
-SRC		=	main.c	signal_handler.c	tshell.c \
+SRC		=	main.c	signal_handler.c	tshell.c 		directory_handler.c \
 			tenv/tenv_init.c	tenv/tenv_destroy.c		tenv/tenv_utils.c \
 			ft_export.c
 OBJ 	=	$(SRC:%.c=%.o)

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/22 14:13:47 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:41:58 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,31 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <libft.h>
+# include <dirent.h>
 
-typedef struct s_env_var
-{
+# define BUILTIN_NB 4
+
+typedef struct s_env_var {
 	char	*name;
 	char	*value;
 }				t_env_var;
+
+struct s_shell;
+typedef	struct s_builtin {
+	char	*name;
+	void	(*f)(struct s_shell *shell, int argc, char **argv);
+}				t_builtin;
 
 typedef	struct s_shell {
 	/* int	running; */
 	/* int	pid; */
 	char			*prompt;
+	char			*pwd;
 	struct termios	termios_shell;
+	t_builtin		builtin_list[BUILTIN_NB];
 	t_env_var		**env;
 }				t_shell;
+
 
 typedef	struct s_cmd {
 	char	*function;
