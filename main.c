@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/23 16:52:50 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:30:51 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ int main(int argc, char **argv, char **env)
 {
 	char			*str = NULL;
 	t_shell			shell;
-	int				ret;
-	char			**cat_arg;
-	pid_t			pid;
 
 	(void) argc;
 	(void) argv;
@@ -36,21 +33,6 @@ int main(int argc, char **argv, char **env)
 	{
 		printf("%s\n", str); // <--- parse str & exec
 		add_history(str);
-		if (!strcmp(str, "cat"))
-		{
-			cat_arg = malloc(sizeof(char *) * 3);
-			cat_arg[0] = "cat";
-			cat_arg[1] = "file*";
-			cat_arg[2] = NULL;
-			pid = fork();
-			if (!pid)
-			{
-				ret = execve("/usr/bin/cat", cat_arg, env);
-				if (ret == -1)
-					perror("execve ");
-			}
-			free(cat_arg);
-		}
 		free(str);
 		str = readline(shell.prompt);
 	}
@@ -58,6 +40,7 @@ int main(int argc, char **argv, char **env)
 	printf("exit\n");
 }
 
+/** Not used currently **/
 void	clean_exit(t_shell *shell, int exit_code)
 {
 	destroy_tshell(shell);

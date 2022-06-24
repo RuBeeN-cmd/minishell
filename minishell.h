@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/23 14:41:58 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:34:32 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <libft.h>
 # include <dirent.h>
 
-# define BUILTIN_NB 4
+# define BUILTIN_NB 3
 
 typedef struct s_env_var {
 	char	*name;
@@ -42,7 +42,7 @@ typedef	struct s_shell {
 	char			*prompt;
 	char			*pwd;
 	struct termios	termios_shell;
-	t_builtin		builtin_list[BUILTIN_NB];
+	t_builtin		builtin_list[BUILTIN_NB + 1];
 	t_env_var		**env;
 }				t_shell;
 
@@ -99,6 +99,21 @@ void	destroy_cmd(t_cmd	*cmd);
 ////////////		built in		//////////////
 //////////////////////////////////////////////////
 
+/**	builtin_handler	**/
+t_builtin	*init_builtin(char *name,
+		void	(*f)(t_shell *shell, int argc, char **argv));
+void	init_builtin_list(t_shell *shell);
+void	destroy_builtin_list(t_shell *shell);
+
+/**	builtin_basics	**/
+void	pwd(t_shell *shell, int argc, char **argv);
+void	cd(t_shell *shell, int argc, char **argv);
+//		echo
+//		exit
+
+/**	builtin_env		**/
+//		unset
+void	env(t_shell *shell, int argc, char **argv);
 void	ft_export(t_shell *shell, char **cmd);
 
 #endif

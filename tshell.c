@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/23 12:41:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:29:47 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_tshell(t_shell *shell, char **env)
 void	destroy_tshell(t_shell *shell)
 {
 	destroy_env(shell->env);
+	destroy_builtin_list(shell);
 	shell->env = NULL;
 	if (shell->pwd)
 		free(shell->pwd);
