@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 17:27:54 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:10:22 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef	struct s_shell {
 
 
 typedef	struct s_cmd {
-	char	*function;
-	char	**arguments;
+	int		argc;
+	char	**argv;
 	//redirection
 }				t_cmd;
 
@@ -92,7 +92,7 @@ void		remove_env_var(t_shell *shell, char *name);
 ////////////		tcmd			//////////////
 //////////////////////////////////////////////////
 
-t_cmd	*init_cmd(char	*function, char **arguments);
+t_cmd	*init_cmd();
 void	destroy_cmd(t_cmd	*cmd);
 
 //////////////////////////////////////////////////
