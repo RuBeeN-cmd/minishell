@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 14:26:28 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:36:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 int main(int argc, char **argv, char **env)
 {
-	char			*str = NULL;
+	char			*str;
 	t_shell			*shell;
 
 	(void) argc;

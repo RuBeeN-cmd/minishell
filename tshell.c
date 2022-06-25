@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 14:11:06 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:37:59 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_shell	*init_tshell(char **env)
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
-	shell->prompt = "> ";
+	shell->prompt = "\e[1;34m>\033[0;37m ";
 	tcgetattr(0, &shell->termios_shell);
 	shell->termios_shell.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, 0, &shell->termios_shell);
