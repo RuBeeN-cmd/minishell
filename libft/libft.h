@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/21 16:00:35 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:26:18 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_free_all(int nbr, ...);
 void	**ft_free_tab(void **tab);
 void	**ft_add_row(void **tab);
 size_t	ft_tablen(const void **tab);
+void	ft_tab_insert(void ***tab, int position, void *to_insert);
 
 /******************* Printf ******************************/
 typedef struct s_arg	t_arg;
