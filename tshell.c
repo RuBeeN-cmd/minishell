@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 17:27:20 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:11:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_shell	*init_tshell(char **env)
 	shell->termios_shell.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, 0, &shell->termios_shell);
 	shell->env = init_env(env);
+	shell->pwd = NULL;
 	shell->pwd = getcwd(shell->pwd, 0);
 	init_builtin_list(shell);
 	return (shell);

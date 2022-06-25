@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/06/24 17:25:14 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 13:58:44 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	export(t_shell *shell, int argc, char **argv)
 		if (eq_ptr && eq_ptr != argv[i])
 		{
 			var = ft_split(argv[i], '=');
+			if (!var[1])
+				var[1] = ft_strdup("");
 			env_var_ptr = get_env_var(shell, var[0]);
 			if (env_var_ptr)
 				env_var_ptr->value = var[1];
@@ -43,9 +45,7 @@ void	export(t_shell *shell, int argc, char **argv)
 			free(var);
 		}
 		else if (eq_ptr == argv[i])
-		{
 			printf("export: invalids arguments");
-		}
 	}
 }
 

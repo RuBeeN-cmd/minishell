@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 13:20:38 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:26:07 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ void	cd(t_shell *shell, int argc, char **argv)
 	if (argc == 1 || argc == 2)
 	{
 		pwd = get_env_var(shell, "PWD");
-		old_pwd = get_env_var(shell, "OLD_PWD");
+		old_pwd = get_env_var(shell, "OLDPWD");
 		if (argc == 1)
 			path = "~";
-		else if (!strcmp(argv[1], "-"))
-			path = old_pwd->value;	//Need a check to see if OLD_PWD is set, else send an error
 		else
 			path = argv[1];
-		old_pwd->value = pwd->value;
+		if (old_pwd && pwd)
+			old_pwd->value = pwd->value;
 		ret = chdir(path);
-		pwd->value = getcwd(pwd->value, 0);
-		shell->pwd = pwd->value;
+		shell->pwd = getcwd(shell->pwd, 0);
+		if (pwd)
+			pwd->value = shell->pwd;
 		if (ret == -1)
 			perror("Error ");
 	}

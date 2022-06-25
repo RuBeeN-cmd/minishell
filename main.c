@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 17:31:27 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 14:26:28 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 /* 	return (&shell); */
 /* } */
-
 
 int main(int argc, char **argv, char **env)
 {
@@ -32,7 +31,7 @@ int main(int argc, char **argv, char **env)
 	str = readline(shell->prompt);
 	while (str)
 	{
-		// printf("%s\n", str); // <--- parse str & exec
+		printf("%s\n", str); // <--- parse str & exec
 		add_history(str);
 		free(str);
 		str = readline(shell->prompt);
