@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 15:34:52 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:46:13 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ typedef struct s_env_var {
 	char	*value;
 }				t_env_var;
 
-struct s_shell;
-typedef	struct s_builtin {
+struct	s_shell;
+typedef struct s_builtin {
 	char	*name;
 	void	(*f)(struct s_shell *shell, int argc, char **argv);
 }				t_builtin;
 
-typedef	struct s_shell {
+typedef struct s_shell {
 	/* int	running; */
 	/* int	pid; */
 	char			*prompt;
@@ -46,8 +46,7 @@ typedef	struct s_shell {
 	t_env_var		**env;
 }				t_shell;
 
-
-typedef	struct s_cmd {
+typedef struct s_cmd {
 	int		argc;
 	char	**argv;
 	//redirection
@@ -58,15 +57,15 @@ typedef	struct s_cmd {
 //////////////////////////////////////////////////
 
 /********	main.c	*******************/
-int		main(int argc, char **argv, char **env);
+int			main(int argc, char **argv, char **env);
 
 /********	signal_handler.c	*******/
-void	set_signal_handlers(void);
-void	receive(int signum);
+void		set_signal_handlers(void);
+void		receive(int signum);
 
 /********	tshell.c		***********/
-t_shell	*init_tshell(char **env);
-void	destroy_tshell(t_shell *shell);
+t_shell		*init_tshell(char **env);
+void		destroy_tshell(t_shell *shell);
 
 //////////////////////////////////////////////////
 ////////////		tenv			//////////////
@@ -92,8 +91,8 @@ void		remove_env_var(t_shell *shell, char *name);
 ////////////		tcmd			//////////////
 //////////////////////////////////////////////////
 
-t_cmd	*init_cmd();
-void	destroy_cmd(t_cmd	*cmd);
+t_cmd		*init_cmd(void);
+void		destroy_cmd(t_cmd *cmd);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
@@ -101,19 +100,19 @@ void	destroy_cmd(t_cmd	*cmd);
 
 /**	builtin_handler	**/
 t_builtin	*init_builtin(char *name,
-		void	(*f)(t_shell *shell, int argc, char **argv));
-void	init_builtin_list(t_shell *shell);
-void	destroy_builtin_list(t_shell *shell);
+				void (*f)(t_shell *shell, int argc, char **argv));
+void		init_builtin_list(t_shell *shell);
+void		destroy_builtin_list(t_shell *shell);
 
 /**	builtin_basics	**/
-void	pwd(t_shell *shell, int argc, char **argv);
-void	cd(t_shell *shell, int argc, char **argv);
+void		pwd(t_shell *shell, int argc, char **argv);
+void		cd(t_shell *shell, int argc, char **argv);
 //		echo
 //		exit
 
 /**	builtin_env		**/
-void	unset(t_shell *shell, int argc, char **argv);
-void	env(t_shell *shell, int argc, char **argv);
-void	export(t_shell *shell, int argc, char **argv);
+void		unset(t_shell *shell, int argc, char **argv);
+void		env(t_shell *shell, int argc, char **argv);
+void		export(t_shell *shell, int argc, char **argv);
 
 #endif

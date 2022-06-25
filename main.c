@@ -6,20 +6,13 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 15:36:06 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:42:58 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* t_shell *get_shell() */
-/* { */
-/* 	static t_shell shell; */
-
-/* 	return (&shell); */
-/* } */
-
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char			*str;
 	t_shell			*shell;

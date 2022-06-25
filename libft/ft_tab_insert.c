@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab_insert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 13:49:55 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 14:04:05 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:41:34 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_tab_insert(void ***tab, int position, void *to_insert)
 	void	**copy;
 	int		length;
 	int		count;
-	
+
 	length = ft_tablen((const void **)*tab);
 	if (position > length)
 		position = length;

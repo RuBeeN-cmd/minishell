@@ -6,14 +6,14 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/24 13:52:20 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:41:17 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
 t_builtin	*init_builtin(char *name,
-		void	(*f)(t_shell *shell, int argc, char **argv))
+		void (*f)(t_shell *shell, int argc, char **argv))
 {
 	t_builtin	*new;
 
@@ -31,6 +31,7 @@ void	init_builtin_list(t_shell *shell)
 	shell->builtin_list[3] = init_builtin("export", &export);
 	shell->builtin_list[4] = NULL;
 }
+
 void	destroy_builtin_list(t_shell *shell)
 {
 	int	count;
