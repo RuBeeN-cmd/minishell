@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 15:46:13 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:33:33 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <libft.h>
 # include <dirent.h>
+# include <fcntl.h>
 
 # define BUILTIN_NB 4
 
@@ -114,5 +115,15 @@ void		cd(t_shell *shell, int argc, char **argv);
 void		unset(t_shell *shell, int argc, char **argv);
 void		env(t_shell *shell, int argc, char **argv);
 void		export(t_shell *shell, int argc, char **argv);
+
+
+//////////////////////////////////////////////////
+////////////		file     		//////////////
+//////////////////////////////////////////////////
+
+/**  file_utils  **/
+void		write_mode(char *path, char *str, int mode);
+void		append_file(char *path, char *str);
+void		replace_file(char *path, char *str);
 
 #endif
