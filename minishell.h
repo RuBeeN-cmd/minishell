@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/28 13:33:33 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/29 13:01:19 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,12 @@ void		export(t_shell *shell, int argc, char **argv);
 void		write_mode(char *path, char *str, int mode);
 void		append_file(char *path, char *str);
 void		replace_file(char *path, char *str);
+
+
+
+
+/**  recur.c  **/
+int			ft_get_split_index(const char *str, const char *delimiter);
+void		ft_exec_bloc(char *str);
 
 #endif

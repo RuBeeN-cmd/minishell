@@ -1,7 +1,7 @@
 SRC		=	main.c						signal_handler.c		tshell.c	\
 			builtin/builtin_basics.c 	builtin/builtin_env.c	builtin/builtin_handler.c	\
 			tenv/tenv_init.c			tenv/tenv_destroy.c		tenv/tenv_utils.c \
-			file/file_utils.c
+			file/file_utils.c			recur.c
 OBJ 	=	$(SRC:%.c=%.o)
 CC		=	gcc
 CFLAGS	=	-g -Wall -Wextra -Werror -L/usr/local/lib -I/usr/local/include
