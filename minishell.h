@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/30 12:31:58 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/30 15:49:54 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_cmd {
 	//redirection
 }				t_cmd;
 
-enum e_elem_type {WORD, REDIRECT, OPERATOR, PARENTHESIS};
+enum e_elem_type {WORD, REDIRECT, OPERATOR, PIPE, PARENTHESIS};
 typedef	enum e_elem_type t_elem_type;
 
 typedef struct s_cmd_element {
@@ -101,8 +101,13 @@ void		remove_env_var(t_shell *shell, char *name);
 ////////////		tcmd			//////////////
 //////////////////////////////////////////////////
 
+/****		tcmd.c		****/
 t_cmd		*init_cmd(void);
 void		destroy_cmd(t_cmd *cmd);
+
+/***		t_cmd_element.c		******/
+t_cmd_element	*init_element(char *str, t_elem_type type);
+void	destroy_element(t_cmd_element *elem);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
