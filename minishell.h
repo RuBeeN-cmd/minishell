@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/29 13:01:19 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:31:58 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ typedef struct s_cmd {
 	char	**argv;
 	//redirection
 }				t_cmd;
+
+enum e_elem_type {WORD, REDIRECT, OPERATOR, PARENTHESIS};
+typedef	enum e_elem_type t_elem_type;
+
+typedef struct s_cmd_element {
+	char					*str;
+	t_elem_type				type;
+	struct s_cmd_element	*next;
+}				t_cmd_element;
 
 //////////////////////////////////////////////////
 ////////////		minishell		//////////////
