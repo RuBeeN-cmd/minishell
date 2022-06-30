@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:33:02 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 15:42:00 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:53:05 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int	ft_str_contains(const char *str, char c)
 		if (str[count] == c)
 			return (1);
 	}
+	if (c == 0)
+		return (1);
 	return (0);
 }
