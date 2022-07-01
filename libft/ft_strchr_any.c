@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:27:48 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/01 15:07:38 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:19:32 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,5 @@ char	*ft_strchr_any(char *str, char *charset)
 			return (str);
 		str++;
 	}
-	if (ft_str_contains(charset, '\0'))
-		return (str);
 	return (NULL);
 }
