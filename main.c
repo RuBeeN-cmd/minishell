@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/01 14:59:11 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:45:01 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ void test(void)
 	t_cmd_element *input;
 	t_cmd_element *tmp;
 
-	tmp = create_elem(ft_strdup("cat"), WORD);
+	tmp = create_elem(ft_strdup("("), PARENTHESIS);
 	input = tmp;
-	tmp->next = create_elem(ft_strdup("usgvjls"), WORD);
+	tmp->next = create_elem(ft_strdup("echo"), WORD);
+	tmp = tmp->next;
+	tmp->next = create_elem(ft_strdup("||"), OPERATOR);
+	tmp = tmp->next;
+	tmp->next = create_elem(ft_strdup("echo"), WORD);
+	tmp = tmp->next;
+	tmp->next = create_elem(ft_strdup(")"), PARENTHESIS);
 	tmp = tmp->next;
 	tmp->next = create_elem(ft_strdup("&&"), OPERATOR);
 	tmp = tmp->next;
@@ -36,7 +42,7 @@ void test(void)
 	tmp = tmp->next;
 	tmp->next = create_elem(ft_strdup("echo"), WORD);
 	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("&&"), OPERATOR);
+	tmp->next = create_elem(ft_strdup("||"), OPERATOR);
 	tmp = tmp->next;
 	tmp->next = create_elem(ft_strdup("cat"), WORD);
 	tmp = tmp->next;

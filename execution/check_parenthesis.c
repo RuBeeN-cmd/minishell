@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:04:22 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/01 15:04:35 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:35:00 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	got_parenthesis(t_cmd_element *input)
 {
 	int	nb_parenthesis;
 
-	nb_parenthesis = 0;
 	if (input->type == PARENTHESIS
 		&& !ft_strcmp((const char *) input->str, "("))
 	{
-		nb_parenthesis++;
+		nb_parenthesis = 1;
 		input = input->next;
 		while (input->next)
 		{
@@ -31,11 +30,13 @@ int	got_parenthesis(t_cmd_element *input)
 				else
 					nb_parenthesis--;
 			}
+			if (!nb_parenthesis)
+				return (0);
 			input = input->next;
 		}
 		return (input->type == PARENTHESIS
 			&& !ft_strcmp((const char *) input->str, ")")
-			&& nb_parenthesis > 0);
+			&& nb_parenthesis == 1);
 	}
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:05:15 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/01 15:15:56 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:44:08 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_get_blocks(t_cmd_element *input, t_cmd_element **cmd,
 
 	is_in_parenthesis = 0;
 	*cmd = input;
+	if (input->type == PARENTHESIS)
+		is_in_parenthesis++;
 	while (input->next)
 	{
 		if (input->next->type == PARENTHESIS)
@@ -50,11 +52,13 @@ int	ft_split_cmd(t_cmd_element *input)
 	{
 		if (ft_exec_bloc(cmd))
 			return (ft_exec_bloc(nxt_block));
+		return (0);
 	}
 	else if (!ft_strcmp(op->str, "||"))
 	{
 		if (!ft_exec_bloc(cmd))
 			return (ft_exec_bloc(nxt_block));
+		return (0);
 	}
 	return (1);
 }
