@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_cmd_element.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/30 15:50:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:41:33 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,15 @@ void	destroy_element(t_cmd_element *elem)
 {
 	free(elem->str);
 	free(elem);
+}
+
+void	print_element(t_cmd_element *input)
+{
+	while (input)
+	{
+		printf("%s", input->str);
+		input = input->next;
+		if (input)
+			printf(" ");
+	}
 }
