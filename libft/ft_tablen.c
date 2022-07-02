@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:55:20 by rrollin           #+#    #+#             */
-/*   Updated: 2022/05/16 13:36:14 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:16:50 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_tablen(const void **tab)
 	int	len;
 
 	len = 0;
-	while (tab[len])
+	while (tab && tab[len])
 		len++;
 	return (len);
 }

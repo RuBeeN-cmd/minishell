@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/29 14:01:55 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:52:33 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		ft_str_equals_any(const char *s1, int nb, ...);
 int		ft_str_contains(const char *str, char c);
 int		ft_str_contains_any(const char *str, char *charset);
 char	*ft_strchr_any(char *str, char *charset);
+char	*ft_strsubstr(const char *str, const char *search, size_t to_search);
 char	*ft_strnjoin(char *s1, char *s2, int length);
 char	*ft_strjoin_free(char *s1, char *s2);
 

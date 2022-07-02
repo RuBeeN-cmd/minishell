@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 15:01:40 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:44:48 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
 # include <libft.h>
 # include <dirent.h>
 # include <fcntl.h>
@@ -119,6 +120,10 @@ t_cmd_element	*parse_word_element(t_shell *shell, char **str);
 char			*parse_substring(t_shell *shell, char *str, int length);
 char			*parse_var_call(t_shell *shell, char **str);
 
+/***		cmd_wildcards.c		******/
+void			handle_wildcards(t_cmd_element **list);
+char			**get_matching_files(char *expr);
+int				is_matching_wildcard(char *name, char *expr);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////

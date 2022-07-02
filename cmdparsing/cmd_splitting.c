@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_parsing.c                                  :+:      :+:    :+:   */
+/*   cmd_splitting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 13:06:01 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:42:32 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_cmd_element	*split_into_element_list(t_shell *shell, char *str)
 {

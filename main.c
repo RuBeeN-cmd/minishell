@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 13:33:06 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:46:46 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 	while (str)
 	{
 		list = split_into_element_list(shell, str);
+		handle_wildcards(&list);
 		print_element_list(list);
 		ft_exec_bloc(list);
 		add_history(str);

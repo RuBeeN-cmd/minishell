@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 13:49:55 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/25 15:41:34 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:23:08 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ void	ft_tab_insert(void ***tab, int position, void *to_insert)
 	copy[length + 1] = NULL;
 	copy[position] = to_insert;
 	count = -1;
-	while ((*tab)[++count])
+	while (*tab && (*tab)[++count])
 	{
 		if (count >= position)
 			copy[count + 1] = (*tab)[count];
 		else if (count < position)
 			copy[count] = (*tab)[count];
 	}
-	free(*tab);
+	if (*tab)
+		free(*tab);
 	*tab = copy;
 }

@@ -6,11 +6,11 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 13:34:24 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:42:23 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_cmd_element	*init_element(char *str, t_elem_type type)
 {
