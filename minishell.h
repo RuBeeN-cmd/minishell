@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 13:35:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 15:01:40 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void			print_env(t_shell *shell);
 void			remove_env_var(t_shell *shell, char *name);
 
 //////////////////////////////////////////////////
-////////////		tcmd			//////////////
+////////////		cmdparsing		//////////////
 //////////////////////////////////////////////////
 
 /****		tcmd.c		****/
@@ -112,7 +112,7 @@ void			destroy_element_list(t_cmd_element *elem);
 void			print_element(t_cmd_element *elem);
 void			print_element_list(t_cmd_element *elem);
 
-/***		command_parsing.c	******/
+/***		cmd_splitting.c		******/
 t_cmd_element	*split_into_element_list(t_shell *shell, char *str);
 t_cmd_element	*parse_element_at(t_shell *shell, char **str);
 t_cmd_element	*parse_word_element(t_shell *shell, char **str);
