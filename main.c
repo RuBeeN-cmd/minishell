@@ -6,67 +6,33 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/01 15:45:01 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/02 13:33:06 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd_element *create_elem(char *str, t_elem_type type)
-{
-	t_cmd_element *input = malloc((sizeof(t_cmd_element)));
-	input->str = str;
-	input->type = type;
-	input->next = NULL;
-	return (input);
-}
-
-void test(void)
-{
-	t_cmd_element *input;
-	t_cmd_element *tmp;
-
-	tmp = create_elem(ft_strdup("("), PARENTHESIS);
-	input = tmp;
-	tmp->next = create_elem(ft_strdup("echo"), WORD);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("||"), OPERATOR);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("echo"), WORD);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup(")"), PARENTHESIS);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("&&"), OPERATOR);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("("), PARENTHESIS);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("echo"), WORD);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("||"), OPERATOR);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup("cat"), WORD);
-	tmp = tmp->next;
-	tmp->next = create_elem(ft_strdup(")"), PARENTHESIS);
-	ft_exec_bloc(input);
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	char			*str;
 	t_shell			*shell;
+	t_cmd_element	*list;
 
 	(void) argc;
 	(void) argv;
 	shell = init_tshell(env);
 	set_signal_handlers();
 	str = readline(shell->prompt);
-	while (str && 0)
+	while (str)
 	{
+		list = split_into_element_list(shell, str);
+		print_element_list(list);
+		ft_exec_bloc(list);
 		add_history(str);
 		free(str);
+		destroy_element_list(list);
 		str = readline(shell->prompt);
 	}
-	test();
 	destroy_tshell(shell);
 	printf("exit\n");
 }

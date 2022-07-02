@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:03:23 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/29 13:59:47 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/02 13:12:38 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*ft_strnjoin(char *s1, char *s2, int length)
 	while (s1 && s1[size])
 		size++;
 	if (s2)
-		length += ft_lower(length, ft_strlen(s2));
-	str = malloc(sizeof(char) * (length + 1));
+		size += ft_lower(length, ft_strlen(s2));
+	str = malloc(sizeof(char) * (size + 1));
 	if (!str)
 		return (NULL);
 	count = 0;

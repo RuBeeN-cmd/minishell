@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/30 16:41:33 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/02 13:34:24 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,51 @@ void	destroy_element(t_cmd_element *elem)
 	free(elem);
 }
 
-void	print_element(t_cmd_element *input)
+void	destroy_element_list(t_cmd_element *elem)
 {
-	while (input)
+	t_cmd_element	*current;
+	t_cmd_element	*next;
+
+	current = elem;
+	while (current)
 	{
-		printf("%s", input->str);
-		input = input->next;
-		if (input)
-			printf(" ");
+		next = current->next;
+		destroy_element(current);
+		current = next;
+	}
+}
+
+void	print_element(t_cmd_element *elem)
+{
+	printf("\tType :\t\t");
+	if (elem->type == WORD)
+		printf("Word\n");
+	else if (elem->type == REDIRECT)
+		printf("Redirect\n");
+	else if (elem->type == OPERATOR)
+		printf("Binary operator\n");
+	else if (elem->type == PIPE)
+		printf("Pipe\n");
+	else if (elem->type == PARENTHESIS)
+		printf("Parenthesis\n");
+	else
+		printf("Unknown");
+	printf("\tContent\t\t%s\n", elem->str);
+
+}
+
+void	print_element_list(t_cmd_element *elem)
+{
+	t_cmd_element	*current;
+	int				count;
+
+	current = elem;
+	count = 1;
+	while(current)
+	{
+		printf("Element %2.d\n", count);
+		print_element(current);
+		count++;
+		current = current->next;
 	}
 }

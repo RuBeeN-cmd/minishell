@@ -1,7 +1,7 @@
 SRC		=	main.c						signal_handler.c		tshell.c					\
 			builtin/builtin_basics.c 	builtin/builtin_env.c	builtin/builtin_handler.c	\
 			tenv/tenv_init.c			tenv/tenv_destroy.c		tenv/tenv_utils.c			\
-			file/file_utils.c			t_cmd_element.c										\
+			file/file_utils.c			t_cmd_element.c			command_parsing.c			\
 			execution/exec.c			execution/check_parenthesis.c	execution/split_cmd.c
 OBJ 	=	$(SRC:%.c=%.o)
 CC		=	gcc

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/01 15:13:17 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/02 13:35:03 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,17 @@ void			destroy_cmd(t_cmd *cmd);
 /***		t_cmd_element.c		******/
 t_cmd_element	*init_element(char *str, t_elem_type type);
 void			destroy_element(t_cmd_element *elem);
-void			print_element(t_cmd_element *input);
+void			destroy_element_list(t_cmd_element *elem);
+void			print_element(t_cmd_element *elem);
+void			print_element_list(t_cmd_element *elem);
+
+/***		command_parsing.c	******/
+t_cmd_element	*split_into_element_list(t_shell *shell, char *str);
+t_cmd_element	*parse_element_at(t_shell *shell, char **str);
+t_cmd_element	*parse_word_element(t_shell *shell, char **str);
+char			*parse_substring(t_shell *shell, char *str, int length);
+char			*parse_var_call(t_shell *shell, char **str);
+
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
