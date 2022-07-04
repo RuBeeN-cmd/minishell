@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:05:15 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/01 15:44:08 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/04 16:49:24 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ int	ft_split_cmd(t_cmd_element *input)
 	ft_get_blocks(input, &cmd, &op, &nxt_block);
 	if (!ft_strcmp(op->str, "&&"))
 	{
+		destroy_element(op);
 		if (ft_exec_bloc(cmd))
 			return (ft_exec_bloc(nxt_block));
 		return (0);
 	}
 	else if (!ft_strcmp(op->str, "||"))
 	{
+		destroy_element(op);
 		if (!ft_exec_bloc(cmd))
 			return (ft_exec_bloc(nxt_block));
 		return (0);

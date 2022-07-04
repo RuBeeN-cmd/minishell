@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 16:46:46 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:27:22 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		list = split_into_element_list(shell, str);
 		handle_wildcards(&list);
-		print_element_list(list);
+		//print_element_list(list);
 		ft_exec_bloc(list);
 		add_history(str);
 		free(str);
-		destroy_element_list(list);
 		str = readline(shell->prompt);
 	}
 	destroy_tshell(shell);

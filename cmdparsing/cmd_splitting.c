@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_splitting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 16:42:32 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/04 14:44:12 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_cmd_element	*parse_element_at(t_shell *shell, char **str)
 	else 
 		type = WORD;
 	if (type == PIPE || type == PARENTHESIS ||
-			(type == REDIRECT && (*str)[0] != (*str)[1]))
+		(type == REDIRECT && (*str)[0] != (*str)[1]))
 		length = 1;
 	else if (type != WORD)
 		length = 2;

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 16:44:48 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:32:29 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int				exec(t_cmd_element *cmd);
 /**  check_parenthesis.c  **/
 void			remove_parenthesis(t_cmd_element **input);
 int				got_parenthesis(t_cmd_element *input);
+void			remove_pipe_parenthesis(t_cmd_element **input);
 
 /**  split_cmd.c  **/
 int				ft_split_cmd(t_cmd_element *input);
