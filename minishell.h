@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/04 16:32:29 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/06 11:39:23 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include <dirent.h>
 # include <fcntl.h>
 
-# define BUILTIN_NB 4
+# define BUILTIN_NB	4
+# define PARENTHESIS_NB	20
 
 typedef struct s_env_var {
 	char	*name;
@@ -49,7 +50,7 @@ typedef struct s_shell {
 }				t_shell;
 
 typedef struct s_cmd {
-	int		argc;
+	int		argc;	
 	char	**argv;
 	//redirection
 }				t_cmd;
@@ -122,8 +123,14 @@ char			*parse_var_call(t_shell *shell, char **str);
 
 /***		cmd_wildcards.c		******/
 void			handle_wildcards(t_cmd_element **list);
+t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current, char **matching_files);
 char			**get_matching_files(char *expr);
 int				is_matching_wildcard(char *name, char *expr);
+int				advance_in_word(char **name, char **expr, int length, char *match);
+
+/***		cmd_syntax_check.c	******/
+int				is_syntax_valid(t_cmd_element *list);
+int				is_parenthesis_syntax_valid(t_cmd_element *list);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
