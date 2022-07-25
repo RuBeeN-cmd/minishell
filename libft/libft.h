@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/02 15:52:33 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/13 13:52:34 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		ft_bigger(int a, int b);
 /** Global utils **/
 void	ft_free_all(int nbr, ...);
 void	**ft_free_tab(void **tab);
+void	ft_destroy_tab(void ***tab, void (*destroy)(void *));
 void	**ft_add_row(void **tab);
 size_t	ft_tablen(const void **tab);
 void	ft_tab_insert(void ***tab, int position, void *to_insert);
@@ -108,6 +109,9 @@ struct		s_arg {
 	char	*formatted_str;
 };
 
+/**				ft_printf_fd.c		**/
+int		ft_printf_fd(int fd, const char *input, ...);
+
 /**			    ft_printf.c			**/
 int		ft_printf(const char *input, ...);
 t_arg	**get_tab_arg(char *input, t_arg **tab_arg, va_list arg_value);
@@ -116,9 +120,9 @@ void	format(t_arg *arg);
 void	check_format(t_arg *arg);
 
 /**				printing.c			**/
-int		print_output(t_arg **tab_arg, char *input);
-int		print_arg(t_arg *arg, int length);
-int		print_other(char *input, int i, t_arg *arg, int length);
+int		print_output(int fd, t_arg **tab_arg, char *input);
+int		print_arg(int fd, t_arg *arg);
+int		print_other(int fd, char *input, int i, t_arg *arg);
 
 /**			    parsing.c		**/
 t_arg	*build_arg(char *str, int *start, va_list arg_value);

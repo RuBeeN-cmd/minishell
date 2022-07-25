@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/06 12:01:38 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:34:43 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	shell = init_tshell(env);
 	set_signal_handlers();
-	/* str = ft_strdup("echo lol && (echo)"); */
+	/* str = ft_strdup("export LOLIL=4"); */
 	str = readline(shell->prompt);
 	while (str)
 	{
 		list = split_into_element_list(shell, str);
 		handle_wildcards(&list);
-		print_element_list(list);
 		if (is_syntax_valid(list))
-			ft_printf("SYNTAX OK\n");
-		else
-			ft_printf("SYNTAX KO\n");
-		//ft_exec_bloc(list);
-		add_history(str);
+			ft_exec_bloc(shell, list);
+		else if (ft_strlen(str)) 
+			ft_printf("Syntax error in command.\n");
+		if (ft_strlen(str))
+			add_history(str);
 		free(str);
-		/* str = NULL; */
 		str = readline(shell->prompt);
+		/* str = NULL; */
 	}
 	destroy_tshell(shell);
 	printf("exit\n");
