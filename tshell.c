@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 13:17:42 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:41:55 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	destroy_tshell(t_shell *shell)
 	if (shell->pwd)
 		free(shell->pwd);
 	if (shell->cmd_tab)
-		ft_destroy_tab((void ***)&shell->cmd_tab, (void (*)(void *))destroy_cmd);
+		ft_destroy_tab((void ***)&shell->cmd_tab,
+			(void (*)(void *))destroy_cmd);
 	free(shell);
 }

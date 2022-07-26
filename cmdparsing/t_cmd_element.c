@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/07 12:54:40 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:06:20 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	print_element_list(t_cmd_element *elem)
 
 	current = elem;
 	count = 1;
-	while(current)
+	while (current)
 	{
 		printf("Element %2.d\n", count);
 		print_element(current);

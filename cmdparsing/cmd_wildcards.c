@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_wildcards.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/04 14:57:09 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:14:03 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	handle_wildcards(t_cmd_element **list)
 	}
 }
 
-t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current, char **matching_files)
+t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current,
+	char **matching_files)
 {
 	t_cmd_element	*previous;
 	t_cmd_element	*end;
@@ -65,8 +66,8 @@ char	**get_matching_files(char *expr)
 	{
 		if (is_matching_wildcard(dirent->d_name, expr))
 			ft_tab_insert((void ***)&matching_files,
-					ft_tablen((const void **)matching_files),
-					ft_strdup(dirent->d_name));
+				ft_tablen((const void **)matching_files),
+				ft_strdup(dirent->d_name));
 		dirent = readdir(dir);
 	}
 	closedir(dir);

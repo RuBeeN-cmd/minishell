@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_syntax_check.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/06 12:05:35 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:07:44 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_parenthesis_syntax_valid(t_cmd_element *list)
 		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, "(") && parenthesis >= -1)
 			words[++parenthesis] = 0;
 		if (cur->type == WORD && cur->next && cur->next->type == PARENTHESIS
-				&& !ft_strcmp(cur->next->str, "("))
+			&& !ft_strcmp(cur->next->str, "("))
 			return (0);
 		if (cur->type == WORD && parenthesis > -1)
 			words[parenthesis] += 1;

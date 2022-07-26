@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:04:22 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/07 15:16:11 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:15:46 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	remove_parenthesis(t_cmd_element **input)
 	{
 		if (tmp->next->type == PARENTHESIS)
 		{
-			if (!ft_strcmp((const char *) tmp->next->str, "("))
-				nb_parenthesis++;
-			else
-				nb_parenthesis--;
+			nb_parenthesis += 1 * !ft_strcmp((const char *) tmp->next->str, "(")
+				+ -1 * !!ft_strcmp((const char *) tmp->next->str, "(");
 		}
 		if (!nb_parenthesis)
 		{

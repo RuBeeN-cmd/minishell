@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 15:02:09 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:27:18 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,21 @@ typedef struct s_env_var {
 struct	s_shell;
 typedef struct s_builtin {
 	char	*name;
-	int	(*f)(struct s_shell *shell, int argc, char **argv);
+	int		(*f)(struct s_shell *shell, int argc, char **argv);
 }				t_builtin;
 
-enum e_redir_type {APPEND, REPLACE, IN, UNTIL};
-typedef	enum e_redir_type t_redir_type;
+typedef enum e_redir_type {
+	APPEND,
+	REPLACE,
+	IN,
+	UNTIL
+}				t_redir_type;
 
 typedef struct s_redir
 {
 	char			*str;
 	t_redir_type	type;
-}				t_redir;
+}			t_redir;
 
 typedef struct s_cmd {
 	int		argc;	
@@ -56,8 +60,13 @@ typedef struct s_cmd {
 	t_redir	**redir_tab;
 }				t_cmd;
 
-enum e_elem_type {WORD, REDIRECT, OPERATOR, PIPE, PARENTHESIS};
-typedef enum e_elem_type	t_elem_type;
+typedef enum e_elem_type {
+	WORD,
+	REDIRECT,
+	OPERATOR,
+	PIPE,
+	PARENTHESIS
+}			t_elem_type;
 
 typedef struct s_cmd_element {
 	char					*str;
@@ -140,10 +149,12 @@ char			*parse_var_call(t_shell *shell, char **str);
 
 /***		cmd_wildcards.c		******/
 void			handle_wildcards(t_cmd_element **list);
-t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current, char **matching_files);
+t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current,
+					char **matching_files);
 char			**get_matching_files(char *expr);
 int				is_matching_wildcard(char *name, char *expr);
-int				advance_in_word(char **name, char **expr, int length, char *match);
+int				advance_in_word(char **name,
+					char **expr, int length, char *match);
 
 /***		cmd_syntax_check.c	******/
 int				is_syntax_valid(t_cmd_element *list);
@@ -153,7 +164,6 @@ int				is_parenthesis_syntax_valid(t_cmd_element *list);
 t_cmd			**parse_final(t_cmd_element *list);
 t_cmd			*parse_single_cmd(t_cmd_element *list);
 t_redir			**parse_redirections(t_cmd_element *list);
-
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
@@ -167,15 +177,16 @@ void			destroy_builtin_list(t_shell *shell);
 int				call_builtin_if_exists(t_shell *shell, t_cmd *cmd);
 
 /**	builtin_basics	**/
-int			pwd(t_shell *shell, int argc, char **argv);
-int			cd(t_shell *shell, int argc, char **argv);
-int			echo(t_shell *shell, int argc, char **argv);
-int			exit_builtin(t_shell *shell, int argc, char **argv);
+int				pwd(t_shell *shell, int argc, char **argv);
+int				cd(t_shell *shell, int argc, char **argv);
+int				echo(t_shell *shell, int argc, char **argv);
+int				exit_builtin(t_shell *shell, int argc, char **argv);
+void			replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd);
 
 /**	builtin_env		**/
-int			unset(t_shell *shell, int argc, char **argv);
-int			env(t_shell *shell, int argc, char **argv);
-int			export(t_shell *shell, int argc, char **argv);
+int				unset(t_shell *shell, int argc, char **argv);
+int				env(t_shell *shell, int argc, char **argv);
+int				export(t_shell *shell, int argc, char **argv);
 
 //////////////////////////////////////////////////
 ////////////		file     		//////////////

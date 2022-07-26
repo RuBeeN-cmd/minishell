@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 13:34:43 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:05:09 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	shell = init_tshell(env);
 	set_signal_handlers();
-	/* str = ft_strdup("export LOLIL=4"); */
 	str = readline(shell->prompt);
 	while (str)
 	{
@@ -30,13 +29,12 @@ int	main(int argc, char **argv, char **env)
 		handle_wildcards(&list);
 		if (is_syntax_valid(list))
 			ft_exec_bloc(shell, list);
-		else if (ft_strlen(str)) 
+		else if (ft_strlen(str))
 			ft_printf("Syntax error in command.\n");
 		if (ft_strlen(str))
 			add_history(str);
 		free(str);
 		str = readline(shell->prompt);
-		/* str = NULL; */
 	}
 	destroy_tshell(shell);
 	printf("exit\n");

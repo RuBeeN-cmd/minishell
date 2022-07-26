@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/25 15:40:08 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:28:33 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ int	pwd(t_shell *shell, int argc, char **argv)
 	return (EXIT_FAILURE);
 }
 
+void	replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd)
+{
+	free(old_pwd->value);
+	old_pwd->value = pwd->value;
+	pwd->value = NULL;
+	return ;
+}
+
 int	cd(t_shell *shell, int argc, char **argv)
 {
 	int			ret;
@@ -44,17 +52,10 @@ int	cd(t_shell *shell, int argc, char **argv)
 		old_pwd = get_env_var(shell, "OLDPWD");
 		path = argv[1];
 		if (old_pwd && pwd)
-		{
-			free(old_pwd->value);
-			old_pwd->value = pwd->value;
-			pwd->value = NULL;
-		}
+			replace_old_pwd(pwd, old_pwd);
 		ret = chdir(path);
 		if (pwd)
-		{
 			pwd->value = getcwd(pwd->value, 0);
-			printf("New pwd: %s\n", pwd->value);
-		}
 		if (ret != -1)
 			return (EXIT_SUCCESS);
 		else
@@ -71,17 +72,16 @@ int	echo(t_shell *shell, int argc, char **argv)
 	int	i;
 
 	(void) shell;
-	n_flag = 0;
+	n_flag = 1;
 	i = 1;
 	if (argc == 1)
 		ft_putchar_fd('\n', 1);
 	else
 	{
 		if (!ft_strcmp(argv[1], "-n"))
-		{
-			n_flag = 1;
 			i++;
-		}
+		else
+			n_flag = 0;
 		while (i < argc)
 		{
 			ft_putstr_fd(argv[i], 1);

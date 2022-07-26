@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:10:04 by johrober          #+#    #+#             */
-/*   Updated: 2022/03/30 16:41:20 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:05:29 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_memcmp(const void *s1, const void *s2, size_t size)
 	if (size == 0)
 		return (0);
 	while (str1[count] == str2[count]
-		&& count < size - 1 )
+		&& count < size - 1)
 		count++;
 	return (str1[count] - str2[count]);
 }

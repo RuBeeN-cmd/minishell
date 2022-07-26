@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/25 15:35:10 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:36:56 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,19 @@ int	env(t_shell *shell, int argc, char **argv)
 	return (EXIT_FAILURE);
 }
 
-int	export(t_shell *shell, int argc, char **argv)
+void	crea_mod_env_var(t_shell *shell, char **var)
 {
 	t_env_var	*env_var_ptr;
+
+	env_var_ptr = get_env_var(shell, var[0]);
+	if (env_var_ptr)
+		env_var_ptr->value = var[1];
+	else
+		add_env_var(shell, var[0], var[1]);
+}
+
+int	export(t_shell *shell, int argc, char **argv)
+{
 	char		**var;
 	char		*eq_ptr;
 	int			i;
@@ -41,11 +51,7 @@ int	export(t_shell *shell, int argc, char **argv)
 			var = ft_split(argv[i], '=');
 			if (!var[1])
 				var[1] = ft_strdup("");
-			env_var_ptr = get_env_var(shell, var[0]);
-			if (env_var_ptr)
-				env_var_ptr->value = var[1];
-			else
-				add_env_var(shell, var[0], var[1]);
+			crea_mod_env_var(shell, var);
 			free(var);
 			if (shell->fork)
 				exit(EXIT_SUCCESS);

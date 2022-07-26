@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:30:36 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/13 13:51:19 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:05:42 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	print_output(int fd, t_arg **tab_arg, char *input)
 
 int	print_arg(int fd, t_arg *arg)
 {
-	int length;
+	int	length;
 
 	ft_putstr_fd(arg->formatted_str, 1);
 	length = ft_strlen(arg->formatted_str);
@@ -61,7 +61,7 @@ int	print_arg(int fd, t_arg *arg)
 
 int	print_other(int fd, char *input, int i, t_arg *arg)
 {
-	int length;
+	int	length;
 
 	length = 0;
 	if (input[i] == '*' && arg && ft_strchr(arg->flags, '*'))

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/13 16:28:19 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:06:12 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_cmd(t_cmd *cmd)
 		printf("\t\t%s\n", cmd->argv[count]);
 	printf("\tRedirections\n");
 	count = -1;
-	while(cmd->redir_tab && cmd->redir_tab[++count])
+	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		printf("\t\tType\t");
 		if (cmd->redir_tab[count]->type == REPLACE)

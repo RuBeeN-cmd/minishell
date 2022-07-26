@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 15:25:55 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:05:58 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*search_executable_path(t_shell *shell, char *exec)
 
 char	*try_path(char *path, char *exec)
 {
-	char *exec_path;
+	char	*exec_path;
 
 	exec_path = NULL;
 	if (ft_strlen(path))

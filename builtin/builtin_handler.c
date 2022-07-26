@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 15:24:25 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/26 16:08:48 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 		if (!ft_strcmp(shell->builtin_list[count]->name, cmd->argv[0]))
 		{
 			builtin = shell->builtin_list[count];
-			break;
+			break ;
 		}
 	}
 	if (!builtin)
