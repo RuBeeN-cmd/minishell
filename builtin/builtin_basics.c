@@ -6,13 +6,13 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 12:51:12 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:40:08 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd(t_shell *shell, int argc, char **argv)
+int	pwd(t_shell *shell, int argc, char **argv)
 {
 	char	*pwd;
 
@@ -24,13 +24,14 @@ void	pwd(t_shell *shell, int argc, char **argv)
 		pwd = getcwd(pwd, 0);
 		ft_printf("%s\n", pwd);
 		free(pwd);
-		exit(EXIT_SUCCESS);
+		return (EXIT_SUCCESS);
 	}
 	else
 		ft_printf_fd(2, "pwd: too many arguments\n");
+	return (EXIT_FAILURE);
 }
 
-void	cd(t_shell *shell, int argc, char **argv)
+int	cd(t_shell *shell, int argc, char **argv)
 {
 	int			ret;
 	t_env_var	*pwd;
@@ -55,13 +56,16 @@ void	cd(t_shell *shell, int argc, char **argv)
 			printf("New pwd: %s\n", pwd->value);
 		}
 		if (ret != -1)
-			exit(EXIT_SUCCESS);
+			return (EXIT_SUCCESS);
+		else
+			perror("cd");
 	}
 	else
 		ft_printf_fd(2, "cd: wrong number of arguments\n");
+	return (EXIT_FAILURE);
 }
 
-void	echo(t_shell *shell, int argc, char **argv)
+int	echo(t_shell *shell, int argc, char **argv)
 {
 	int	n_flag;
 	int	i;
@@ -88,10 +92,10 @@ void	echo(t_shell *shell, int argc, char **argv)
 			i++;
 		}
 	}
-	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
-void	exit_builtin(t_shell *shell, int argc, char **argv)
+int	exit_builtin(t_shell *shell, int argc, char **argv)
 {
 	int	exit_status;
 
@@ -99,12 +103,12 @@ void	exit_builtin(t_shell *shell, int argc, char **argv)
 	if (argc > 2)
 	{
 		ft_printf_fd(2, "exit: too many arguments\n");
-		return ;
+		return (EXIT_FAILURE);
 	}
 	if (argc == 1)
 		exit_status = EXIT_SUCCESS;
 	else
 		exit_status = ft_atoi(argv[1]);
 	destroy_tshell(shell);
-	exit(exit_status);
+	return (exit_status);
 }

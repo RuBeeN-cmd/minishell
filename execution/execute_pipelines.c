@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipelines.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 20:20:33 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:25:55 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,15 @@ int	execute_cmd(t_shell *shell, t_cmd *cmd)
 	cmd->env = env_to_string_array(shell);
 	if (!ft_str_contains(cmd->argv[0], '/'))
 	{
-		if (!call_builtin_if_exists(shell, cmd))
-		{	
-			exec_path = search_executable_path(shell, cmd->argv[0]);
-			if (!exec_path)
-			{
-				ft_printf_fd(2, "%s: command not found.\n", cmd->argv[0]);
-				exit(127);
-			}
-			free(cmd->argv[0]);
-			cmd->argv[0] = exec_path;
+		call_builtin_if_exists(shell, cmd);
+		exec_path = search_executable_path(shell, cmd->argv[0]);
+		if (!exec_path)
+		{
+			ft_printf_fd(2, "%s: command not found.\n", cmd->argv[0]);
+			exit(127);
 		}
+		free(cmd->argv[0]);
+		cmd->argv[0] = exec_path;
 	}
 	execve(cmd->argv[0], cmd->argv, cmd->env);
 	perror(cmd->argv[0]);

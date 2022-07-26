@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 20:22:43 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:02:09 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_env_var {
 struct	s_shell;
 typedef struct s_builtin {
 	char	*name;
-	void	(*f)(struct s_shell *shell, int argc, char **argv);
+	int	(*f)(struct s_shell *shell, int argc, char **argv);
 }				t_builtin;
 
 enum e_redir_type {APPEND, REPLACE, IN, UNTIL};
@@ -161,21 +161,21 @@ t_redir			**parse_redirections(t_cmd_element *list);
 
 /**	builtin_handler	**/
 t_builtin		*init_builtin(char *name,
-					void (*f)(t_shell *shell, int argc, char **argv));
+					int (*f)(t_shell *shell, int argc, char **argv));
 void			init_builtin_list(t_shell *shell);
 void			destroy_builtin_list(t_shell *shell);
 int				call_builtin_if_exists(t_shell *shell, t_cmd *cmd);
 
 /**	builtin_basics	**/
-void			pwd(t_shell *shell, int argc, char **argv);
-void			cd(t_shell *shell, int argc, char **argv);
-void			echo(t_shell *shell, int argc, char **argv);
-void			exit_builtin(t_shell *shell, int argc, char **argv);
+int			pwd(t_shell *shell, int argc, char **argv);
+int			cd(t_shell *shell, int argc, char **argv);
+int			echo(t_shell *shell, int argc, char **argv);
+int			exit_builtin(t_shell *shell, int argc, char **argv);
 
 /**	builtin_env		**/
-void			unset(t_shell *shell, int argc, char **argv);
-void			env(t_shell *shell, int argc, char **argv);
-void			export(t_shell *shell, int argc, char **argv);
+int			unset(t_shell *shell, int argc, char **argv);
+int			env(t_shell *shell, int argc, char **argv);
+int			export(t_shell *shell, int argc, char **argv);
 
 //////////////////////////////////////////////////
 ////////////		file     		//////////////

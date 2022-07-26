@@ -6,14 +6,14 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/13 17:22:10 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:24:25 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
 t_builtin	*init_builtin(char *name,
-		void (*f)(t_shell *shell, int argc, char **argv))
+		int (*f)(t_shell *shell, int argc, char **argv))
 {
 	t_builtin	*new;
 
@@ -47,6 +47,7 @@ void	destroy_builtin_list(t_shell *shell)
 int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 {
 	int			count;
+	int			ret;
 	t_builtin	*builtin;
 
 	count = -1;
@@ -60,7 +61,10 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 		}
 	}
 	if (!builtin)
-		return (0);
-	builtin->f(shell, cmd->argc, cmd->argv);
-	return (1);
+		return (-1);
+	ret = builtin->f(shell, cmd->argc, cmd->argv);
+	if (shell->fork)
+		exit(ret);
+	else
+		return (ret);
 }
