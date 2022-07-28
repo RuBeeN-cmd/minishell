@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:08:48 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/28 11:23:51 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,12 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 	}
 	if (!builtin)
 		return (-1);
+	if (!shell->fork)
+		init_redirections(cmd);
+	set_redirections(shell, cmd);
 	ret = builtin->f(shell, cmd->argc, cmd->argv);
 	if (shell->fork)
 		exit(ret);
-	else
-		return (ret);
+	close_redirections(shell, cmd);
+	return (ret);
 }

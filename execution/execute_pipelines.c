@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:05:58 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/28 11:12:00 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int	execute(t_shell *shell, t_cmd **list)
 	count = -1;
 	while (++count <= nb_pipe)
 	{
+		init_redirections(list[count]);
 		init_pipe((int *)output);
 		if (nb_pipe > 0 && count < nb_pipe)
 			pipe(output);
 		pid = fork_cmd(shell, list[count], (int *)input, (int *)output);
+		close_redirections(shell, list[count]);
 		if (input[0] != -1)
 			close_fd((int *)input);
 		if (output[1] != -1)
@@ -82,6 +84,7 @@ int	execute_cmd(t_shell *shell, t_cmd *cmd)
 		free(cmd->argv[0]);
 		cmd->argv[0] = exec_path;
 	}
+	set_redirections(shell, cmd);
 	execve(cmd->argv[0], cmd->argv, cmd->env);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);

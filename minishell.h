@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:27:18 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/28 11:13:21 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <libft.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # define BUILTIN_NB	7
 # define PARENTHESIS_NB	20
@@ -50,6 +51,7 @@ typedef enum e_redir_type {
 typedef struct s_redir
 {
 	char			*str;
+	int				fd;
 	t_redir_type	type;
 }			t_redir;
 
@@ -57,6 +59,7 @@ typedef struct s_cmd {
 	int		argc;	
 	char	**argv;
 	char	**env;
+	char	*tmpfile_name;
 	t_redir	**redir_tab;
 }				t_cmd;
 
@@ -80,6 +83,8 @@ typedef struct s_shell {
 	int				exit_status;
 	int				fork;
 	struct termios	termios_shell;
+	int				stdout_dup;
+	int				stdin_dup;
 	t_builtin		*builtin_list[BUILTIN_NB + 1];
 	t_cmd			**cmd_tab;
 	t_env_var		**env;
@@ -207,6 +212,13 @@ int				fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output);
 int				execute_cmd(t_shell *shell, t_cmd *cmd);
 char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
+
+/**	redirection_manager.c	**/
+void			init_redirections(t_cmd *cmd);
+void			set_redirections(t_shell *shell, t_cmd *cmd);
+void			close_redirections(t_shell *shell, t_cmd *cmd);
+char			*find_unused_filename(void);
+void			handle_until_redirection(t_cmd *cmd, t_redir *last_until);
 
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);

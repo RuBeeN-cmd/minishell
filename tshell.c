@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 15:41:55 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/27 15:59:53 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_shell	*init_tshell(char **env)
 	shell->fork = 0;
 	shell->pwd = getcwd(shell->pwd, 0);
 	shell->cmd_tab = NULL;
+	shell->stdin_dup = -1;
+	shell->stdout_dup = -1;
 	shell->exit_status = 0;
 	init_builtin_list(shell);
 	return (shell);

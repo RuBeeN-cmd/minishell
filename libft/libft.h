@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/13 13:52:34 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:57:22 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		ft_atoi_base(char *str, char *base);
 int		ft_str_equals_any(const char *s1, int nb, ...);
 int		ft_str_contains(const char *str, char c);
 int		ft_str_contains_any(const char *str, char *charset);
+char	*ft_strstr(char *str, char *to_find);
 char	*ft_strchr_any(char *str, char *charset);
 char	*ft_strsubstr(const char *str, const char *search, size_t to_search);
 char	*ft_strnjoin(char *s1, char *s2, int length);

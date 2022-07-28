@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:06:12 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/27 21:31:03 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,31 @@ t_cmd	*init_cmd(void)
 	cmd->argc = 0;
 	cmd->argv = NULL;
 	cmd->env = NULL;
+	cmd->tmpfile_name = NULL;
 	cmd->redir_tab = NULL;
 	return (cmd);
 }
 
 void	destroy_cmd(t_cmd *cmd)
 {
+	int	ret;
+
 	if (cmd->argv)
 		ft_destroy_tab((void ***)&cmd->argv, &free);
 	if (cmd->redir_tab)
 		ft_destroy_tab((void ***)&cmd->redir_tab, (void (*)(void *))destroy_redir);
 	if (cmd->env)
 		ft_destroy_tab((void ***)&cmd->env, &free);
+	if (cmd->tmpfile_name)
+	{
+		if (!access(cmd->tmpfile_name, F_OK))
+		{
+			ret = unlink(cmd->tmpfile_name);
+			if (ret == -1)
+				perror("unlink tmpfile");
+		}
+		free(cmd->tmpfile_name);
+	}
 	free(cmd);
 }
 
@@ -67,6 +80,7 @@ t_redir	*init_redir(char *str, char *redir_type)
 
 	redir = malloc(sizeof(t_redir));
 	redir->str = ft_strdup(str);
+	redir->fd = -1;
 	if (!ft_strcmp(redir_type, ">"))
 		redir->type = REPLACE;
 	else if (!ft_strcmp(redir_type, ">>"))
