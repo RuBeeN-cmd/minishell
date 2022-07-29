@@ -6,49 +6,47 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/28 11:12:00 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/29 14:05:51 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute(t_shell *shell, t_cmd **list)
+void	execute(t_shell *shell)
 {
 	int		nb_pipe;
 	int		input[2];
 	int		output[2];
 	int		count;
-	pid_t	pid;
+	int		ret;
 
-	nb_pipe = ft_tablen((const void **)list) - 1;
+	nb_pipe = ft_tablen((const void **)shell->cmd_tab) - 1;
 	init_pipe((int *)input);
 	count = -1;
 	while (++count <= nb_pipe)
 	{
-		init_redirections(list[count]);
+		ret = init_redirections(shell->cmd_tab[count]);
 		init_pipe((int *)output);
 		if (nb_pipe > 0 && count < nb_pipe)
 			pipe(output);
-		pid = fork_cmd(shell, list[count], (int *)input, (int *)output);
-		close_redirections(shell, list[count]);
+		if (!ret)
+			fork_cmd(shell, shell->cmd_tab[count], (int *)input, (int *)output);
 		if (input[0] != -1)
 			close_fd((int *)input);
 		if (output[1] != -1)
 			close_fd((int *)output + 1);
+		close_redirections(shell, shell->cmd_tab[count]);
 		copy_pipe_from((int *)input, (int *)output);
 	}
 	close_fd((int *)input + 1);
-	return (pid);
 }
 
-pid_t	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
+void	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
+	cmd->pid = fork();
+	if (cmd->pid == -1)
 		perror("fork");
-	else if (!pid)
+	else if (!cmd->pid)
 	{
 		shell->fork = 1;
 		if (input[0] != -1)
@@ -64,10 +62,9 @@ pid_t	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
 		}
 		execute_cmd(shell, cmd);
 	}
-	return (pid);
 }
 
-int	execute_cmd(t_shell *shell, t_cmd *cmd)
+void	execute_cmd(t_shell *shell, t_cmd *cmd)
 {
 	char	*exec_path;
 

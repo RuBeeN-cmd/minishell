@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/28 14:39:20 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/29 14:14:01 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,20 @@
 
 int	exec(t_shell *shell, t_cmd_element *list)
 {
-	int		status;
-	pid_t	last_child_pid;
+	int count;
+	int	nb_cmd;
 
 	shell->cmd_tab = parse_final(list);
-	if (ft_tablen((const void **)shell->cmd_tab) == 1)
-	{
+	nb_cmd = ft_tablen((const void **)shell->cmd_tab);
+	if (nb_cmd == 1)
 		shell->exit_status = call_builtin_if_exists(shell, shell->cmd_tab[0]);
-		if (shell->exit_status == -1)
-		{
-			last_child_pid = execute(shell, shell->cmd_tab);
-			waitpid(last_child_pid, &status, 0);
-			shell->exit_status = WEXITSTATUS(status);
-		}
-	}
-	else
-	{
-		last_child_pid = execute(shell, shell->cmd_tab);
-		waitpid(last_child_pid, &status, 0);
-		shell->exit_status = WEXITSTATUS(status);
+	if (nb_cmd > 1 || shell->exit_status == -1)
+	{	
+		execute(shell);
+		count = -1;
+		while (shell->cmd_tab[++count])
+			waitpid(shell->cmd_tab[count]->pid, &shell->cmd_tab[count]->status, 0);
+		shell->exit_status = WEXITSTATUS(shell->cmd_tab[count - 1]->status);
 	}
 	ft_destroy_tab((void ***)&shell->cmd_tab, (void (*)(void *))destroy_cmd);
 	shell->cmd_tab = NULL;

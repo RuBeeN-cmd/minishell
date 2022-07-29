@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/28 11:13:21 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/29 14:06:37 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_cmd {
 	char	**argv;
 	char	**env;
 	char	*tmpfile_name;
+	pid_t	pid;
+	int		status;
 	t_redir	**redir_tab;
 }				t_cmd;
 
@@ -207,18 +209,18 @@ void			replace_file(char *path, char *str);
 //////////////////////////////////////////////////
 
 /**	execute_pipelines.c	**/
-pid_t			execute(t_shell *shell, t_cmd **list);
-int				fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output);
-int				execute_cmd(t_shell *shell, t_cmd *cmd);
+void			execute(t_shell *shell);
+void			fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output);
+void			execute_cmd(t_shell *shell, t_cmd *cmd);
 char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
 
 /**	redirection_manager.c	**/
-void			init_redirections(t_cmd *cmd);
+int				init_redirections(t_cmd *cmd);
 void			set_redirections(t_shell *shell, t_cmd *cmd);
 void			close_redirections(t_shell *shell, t_cmd *cmd);
 char			*find_unused_filename(void);
-void			handle_until_redirection(t_cmd *cmd, t_redir *last_until);
+int				handle_until_redirection(t_cmd *cmd, t_redir *last_until);
 
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/27 21:31:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/29 14:07:31 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_cmd	*init_cmd(void)
 	cmd->env = NULL;
 	cmd->tmpfile_name = NULL;
 	cmd->redir_tab = NULL;
+	cmd->pid = -1;
+	cmd->status = -1;
 	return (cmd);
 }
 
@@ -80,7 +82,7 @@ t_redir	*init_redir(char *str, char *redir_type)
 
 	redir = malloc(sizeof(t_redir));
 	redir->str = ft_strdup(str);
-	redir->fd = -1;
+	redir->fd = -2;
 	if (!ft_strcmp(redir_type, ">"))
 		redir->type = REPLACE;
 	else if (!ft_strcmp(redir_type, ">>"))

@@ -6,13 +6,13 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/28 11:25:08 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/29 12:20:16 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	init_redirections(t_cmd *cmd)
+int	init_redirections(t_cmd *cmd)
 {
 	int		count;
 	t_redir	*redir;
@@ -28,12 +28,17 @@ void	init_redirections(t_cmd *cmd)
 		if (redir->type == REPLACE)
 			redir->fd = open(redir->str, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0644);
 		if (redir->type == IN)
-			redir->fd = open(redir->str, O_RDONLY);
+			redir->fd = open(redir->str, O_RDONLY | O_CLOEXEC);
 		if (redir->type == UNTIL)
 			last_until = redir;
+		if (redir->fd == -1)
+			perror(redir->str);
+		if (redir->fd == -1)
+			return (1);
 	}
 	if (last_until)
-		handle_until_redirection(cmd, last_until);
+		return (handle_until_redirection(cmd, last_until));
+	return (0);
 }
 
 void	set_redirections(t_shell *shell, t_cmd *cmd)
@@ -114,18 +119,20 @@ char	*find_unused_filename(void)
 	return (NULL);
 }
 
-void	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
+int	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 {
 	char	*line;
 
 	cmd->tmpfile_name = find_unused_filename();
 	if (!cmd->tmpfile_name)
-		return ;
+		return (1);
 	last_until->fd = open(cmd->tmpfile_name, O_CREAT | O_RDWR | O_EXCL, 0777);
 	if (last_until->fd == -1)
-		perror("open");
+		perror("open:");
+	if (last_until->fd == -1)
+		return (1);
 	line = readline("");
-	while (line && !ft_strstr(line, last_until->str))
+	while (line && ft_strcmp(line, last_until->str) != 0)
 	{
 		ft_printf_fd(last_until->fd, line);
 		ft_printf_fd(last_until->fd, "\n");
@@ -136,4 +143,5 @@ void	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 		free(line);
 	close(last_until->fd);
 	last_until->fd = open(cmd->tmpfile_name, O_RDONLY | O_CLOEXEC);
+	return (0);
 }
