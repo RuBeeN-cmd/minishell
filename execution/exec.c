@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/28 11:23:52 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:39:20 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	exec(t_shell *shell, t_cmd_element *list)
 	shell->cmd_tab = parse_final(list);
 	if (ft_tablen((const void **)shell->cmd_tab) == 1)
 	{
-		if (call_builtin_if_exists(shell, shell->cmd_tab[0]) == -1)
+		shell->exit_status = call_builtin_if_exists(shell, shell->cmd_tab[0]);
+		if (shell->exit_status == -1)
 		{
 			last_child_pid = execute(shell, shell->cmd_tab);
 			waitpid(last_child_pid, &status, 0);
