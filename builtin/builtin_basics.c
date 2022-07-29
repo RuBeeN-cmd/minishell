@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:28:33 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:47:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ int	pwd(t_shell *shell, int argc, char **argv)
 	else
 		ft_printf_fd(2, "pwd: too many arguments\n");
 	return (EXIT_FAILURE);
-}
-
-void	replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd)
-{
-	free(old_pwd->value);
-	old_pwd->value = pwd->value;
-	pwd->value = NULL;
-	return ;
 }
 
 int	cd(t_shell *shell, int argc, char **argv)
@@ -72,16 +64,17 @@ int	echo(t_shell *shell, int argc, char **argv)
 	int	i;
 
 	(void) shell;
-	n_flag = 1;
+	n_flag = 0;
 	i = 1;
 	if (argc == 1)
 		ft_putchar_fd('\n', 1);
 	else
 	{
-		if (!ft_strcmp(argv[1], "-n"))
+		while (!ft_strcmp(argv[i], "-n"))
+		{
 			i++;
-		else
-			n_flag = 0;
+			n_flag = 1;
+		}
 		while (i < argc)
 		{
 			ft_putstr_fd(argv[i], 1);
@@ -94,21 +87,36 @@ int	echo(t_shell *shell, int argc, char **argv)
 	}
 	return (EXIT_SUCCESS);
 }
-
+// exit max : 9223372036854775807
 int	exit_builtin(t_shell *shell, int argc, char **argv)
 {
-	int	exit_status;
+	unsigned char	exit_status;
+	int				i;
 
-	(void)argv;
-	if (argc > 2)
-	{
-		ft_printf_fd(2, "exit: too many arguments\n");
-		return (EXIT_FAILURE);
-	}
+	(void)argc;
+	i = 1;
 	if (argc == 1)
-		exit_status = EXIT_SUCCESS;
-	else
-		exit_status = ft_atoi(argv[1]);
+	{
+		destroy_tshell(shell);
+		exit(EXIT_SUCCESS);
+	}
+	while (argv[i])
+	{
+		if (i == 2)
+		{
+			ft_printf_fd(2, "exit: too many arguments\n");
+			return (EXIT_FAILURE);
+		}
+		if (ft_isnumber(argv[i]))
+			exit_status = (unsigned char) ft_atoi(argv[1]);
+		else
+		{
+			ft_printf_fd(2, "exit: numeric argument required\n");
+			destroy_tshell(shell);
+			exit(2);
+		}
+		i++;
+	}
 	destroy_tshell(shell);
-	return (exit_status);
+	exit(exit_status);
 }
