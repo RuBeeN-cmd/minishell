@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:08:37 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/29 14:49:40 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ t_cmd_element	*parse_word_element(t_shell *shell, char **str)
 			str_parsed = ft_stradd(str_parsed, *word_break);
 		if (!quote_end)
 			quote_end = word_break;
-		else
+		else if (*word_break == '\'')
 			str_parsed = ft_strnjoin(str_parsed, word_break + 1, quote_end - word_break - 1);
+		else
+			str_parsed = ft_strjoin_free(str_parsed, parse_substring(shell, word_break + 1, quote_end - word_break - 1));
 		*str = quote_end + 1;
 		word_break = ft_strchr_any(*str, "\'\" \t><|&()");
 	}
