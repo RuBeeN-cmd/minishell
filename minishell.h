@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/28 11:13:21 by johrober         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:47:12 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,16 @@ int				pwd(t_shell *shell, int argc, char **argv);
 int				cd(t_shell *shell, int argc, char **argv);
 int				echo(t_shell *shell, int argc, char **argv);
 int				exit_builtin(t_shell *shell, int argc, char **argv);
-void			replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd);
 
 /**	builtin_env		**/
 int				unset(t_shell *shell, int argc, char **argv);
 int				env(t_shell *shell, int argc, char **argv);
 int				export(t_shell *shell, int argc, char **argv);
+
+/**	builtin_env		**/
+void			replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd);
+int				ft_isnumber(const char *str);
+void			crea_mod_env_var(t_shell *shell, char **var);
 
 //////////////////////////////////////////////////
 ////////////		file     		//////////////

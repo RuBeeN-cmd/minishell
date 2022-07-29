@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/26 16:36:56 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/07/28 14:45:03 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,6 @@ int	env(t_shell *shell, int argc, char **argv)
 	else
 		ft_printf_fd(2, "env: too many arguments\n");
 	return (EXIT_FAILURE);
-}
-
-void	crea_mod_env_var(t_shell *shell, char **var)
-{
-	t_env_var	*env_var_ptr;
-
-	env_var_ptr = get_env_var(shell, var[0]);
-	if (env_var_ptr)
-		env_var_ptr->value = var[1];
-	else
-		add_env_var(shell, var[0], var[1]);
 }
 
 int	export(t_shell *shell, int argc, char **argv)
