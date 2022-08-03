@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 11:47:06 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:40:43 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,21 @@ int	cd(t_shell *shell, int argc, char **argv)
 	return (EXIT_FAILURE);
 }
 
+int	word_contain_only(char *str, char c)
+{
+	if (str)
+	{
+		while (*str)
+		{
+			if (*str != c)
+				return (0);
+			str++;
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int	echo(t_shell *shell, int argc, char **argv)
 {
 	int	n_flag;
@@ -70,10 +85,15 @@ int	echo(t_shell *shell, int argc, char **argv)
 		ft_putchar_fd('\n', 1);
 	else
 	{
-		while (!ft_strcmp(argv[i], "-n"))
+		while (argv[i] && argv[i][0] == '-')
 		{
-			i++;
-			n_flag = 1;
+			if (word_contain_only(argv[i] + 1, 'n'))
+			{
+				n_flag = 1;
+				i++;
+			}
+			else
+				break ;
 		}
 		while (i < argc)
 		{
