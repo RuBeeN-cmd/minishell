@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:05:09 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/03 11:30:41 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char **argv, char **env)
 	while (str)
 	{
 		list = split_into_element_list(shell, str);
-		handle_wildcards(&list);
 		if (is_syntax_valid(list))
 			ft_exec_bloc(shell, list);
 		else if (ft_strlen(str))

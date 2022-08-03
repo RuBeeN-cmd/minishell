@@ -6,54 +6,58 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:14:03 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/03 12:49:31 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_wildcards(t_cmd_element **list)
+t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 {
-	t_cmd_element	*current;
-	char			**matching_files;
+	int		count;
+	char	**wc;
+	char	**matching_files;
 
-	current = *list;
-	while (current)
-	{
-		if (current->type == WORD && ft_str_contains(current->str, '*'))
-		{
-			matching_files = get_matching_files(current->str);
-			if (matching_files)
-				current = replace_cmd_elements_by(current, matching_files);
-		}
-		current = current->next;
-	}
+	if (!wc_pos)
+		return (init_element(str, WORD));
+	wc = malloc(sizeof(char *) * (ft_tablen((const void **)wc_pos + 1)));
+	count = -1;
+	while (wc_pos[++count] != -1)
+		wc[count] = str + wc_pos[count];
+	wc[count] = NULL;
+	free(wc_pos);
+	matching_files = get_matching_files(str, wc);
+	free(wc);
+	if (!matching_files)
+		return (NULL);
+	return (build_elements_from_matches(matching_files));
 }
 
-t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current,
-	char **matching_files)
+t_cmd_element	*build_elements_from_matches(char **matching_files)
 {
 	t_cmd_element	*previous;
-	t_cmd_element	*end;
+	t_cmd_element	*current;
+	t_cmd_element	*first;
 	int				count;
 
-	free(current->str);
-	current->str = matching_files[0];
-	count = 0;
-	end = current->next;
-	previous = current;
+	count = -1;
+	current = NULL;
+	previous = NULL;
+	first = NULL;
 	while (matching_files[++count])
 	{
 		current = init_element(matching_files[count], WORD);
-		previous->next = current;
+		if (previous)
+			previous->next = current;
 		previous = current;
+		if (!first)
+			first = current;
 	}
-	current->next = end;
 	free(matching_files);
-	return (current);
+	return (first);
 }
 
-char	**get_matching_files(char *expr)
+char	**get_matching_files(char *expr, char **wildcards)
 {
 	DIR				*dir;
 	struct dirent	*dirent;
@@ -64,31 +68,29 @@ char	**get_matching_files(char *expr)
 	dirent = readdir(dir);
 	while (dirent)
 	{
-		if (is_matching_wildcard(dirent->d_name, expr))
+		if (is_matching_wildcard(dirent->d_name, expr, wildcards))
 			ft_tab_insert((void ***)&matching_files,
 				ft_tablen((const void **)matching_files),
 				ft_strdup(dirent->d_name));
 		dirent = readdir(dir);
 	}
 	closedir(dir);
-	//if (!matching_files)
-		//Output error (no match found)
 	return (matching_files);
 }
 
-int	is_matching_wildcard(char *name, char *expr)
+int	is_matching_wildcard(char *name, char *expr, char **wildcards)
 {
 	char	*wildcard;
 	char	*match;
 	int		length;
 
-	wildcard = ft_strchr(expr, '*');
+	wildcard = *(wildcards++);
 	length = wildcard - expr;
 	if (length > 0 && ft_strncmp(name, expr, length))
 		return (0);
 	if (advance_in_word(&name, &expr, length, name))
 		return (1);
-	wildcard = ft_strchr(expr, '*');
+	wildcard = *(wildcards++);
 	while (wildcard)
 	{
 		length = wildcard - expr;
@@ -97,7 +99,7 @@ int	is_matching_wildcard(char *name, char *expr)
 			return (0);
 		if (advance_in_word(&name, &expr, length, match))
 			return (1);
-		wildcard = ft_strchr(expr, '*');
+		wildcard = *(wildcards++);
 	}
 	match = ft_strsubstr(name, expr, ft_strlen(expr));
 	if (match && ft_strlen(match) == ft_strlen(expr))
@@ -108,8 +110,6 @@ int	is_matching_wildcard(char *name, char *expr)
 int	advance_in_word(char **name, char **expr, int length, char *match)
 {
 	*expr += length + 1;
-	while (**expr && **expr == '*')
-		(*expr)++;
 	if (!**expr)
 		return (1);
 	*name = match + length;

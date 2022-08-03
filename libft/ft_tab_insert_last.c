@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tab_insert_last.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 13:22:59 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 12:24:24 by johrober         ###   ########.fr       */
+/*   Created: 2022/08/02 11:14:05 by johrober          #+#    #+#             */
+/*   Updated: 2022/08/03 11:31:22 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+void	ft_tab_insert_last(void ***tab, void *to_insert)
 {
-	int	count;
-
-	count = 0;
-	while (str && str[count])
-		count++;
-	return (count);
+	ft_tab_insert(tab, ft_tablen((const void **)*tab), to_insert);
 }

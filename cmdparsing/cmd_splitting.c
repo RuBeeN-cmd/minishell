@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:49:40 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:58:05 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@ t_cmd_element	*split_into_element_list(t_shell *shell, char *str)
 	current = NULL;
 	while (*str)
 	{
-		if (!current && !ft_str_contains(" \t", *str))
+		if (!ft_str_contains(" \t", *str))
 		{
 			current = parse_element_at(shell, &str);
 			if (first == NULL)
 				first = current;
 			else
 				last->next = current;
-			last = current;
-			current = NULL;
+			while (current != NULL)
+			{
+				last = current;
+				current = current->next;
+			}
 		}
 		else
 			str++;
@@ -64,37 +67,130 @@ t_cmd_element	*parse_element_at(t_shell *shell, char **str)
 	return (init_element(ft_substr(*str - length, 0, length), type));
 }
 
+/* t_cmd_element	*parse_word_element(t_shell *shell, char **str) */
+/* { */
+/* 	char			*str_parsed; */
+/* 	char			*word_break; */
+/* 	char			*quote_end; */
+
+/* 	str_parsed = NULL; */
+/* 	word_break = ft_strchr_any(*str, "\'\" \t><|&()"); */
+/* 	while (word_break && ft_str_contains("\'\"", *word_break)) */
+/* 	{ */
+/* 		str_parsed = ft_strjoin_free(str_parsed, */
+/* 				parse_substring(shell, *str, word_break - *str)); */
+/* 		quote_end = ft_strchr(word_break + 1, *word_break); */
+/* 		if (!quote_end) */
+/* 			str_parsed = ft_stradd(str_parsed, *word_break); */
+/* 		if (!quote_end) */
+/* 			quote_end = word_break; */
+/* 		else if (*word_break == '\'') */
+/* 			str_parsed = ft_strnjoin(str_parsed, word_break + 1, quote_end - word_break - 1); */
+/* 		else */
+/* 			str_parsed = ft_strjoin_free(str_parsed, parse_substring(shell, word_break + 1, quote_end - word_break - 1)); */
+/* 		*str = quote_end + 1; */
+/* 		word_break = ft_strchr_any(*str, "\'\" \t><|&()"); */
+/* 	} */
+/* 	if (!word_break) */
+/* 		word_break = ft_strchr(*str, 0); */
+/* 	str_parsed = ft_strjoin_free(str_parsed, */
+/* 			parse_substring(shell, *str, word_break - *str)); */
+/* 	*str = word_break; */
+/* 	return (init_element(str_parsed, WORD)); */
+/* } */
+
 t_cmd_element	*parse_word_element(t_shell *shell, char **str)
 {
-	char			*str_parsed;
-	char			*word_break;
-	char			*quote_end;
+	char	*str_parsed;
+	char	*word_break;
+	char	*to_add;
+	int		*wildcards;
 
 	str_parsed = NULL;
+	wildcards = NULL;
 	word_break = ft_strchr_any(*str, "\'\" \t><|&()");
 	while (word_break && ft_str_contains("\'\"", *word_break))
 	{
-		str_parsed = ft_strjoin_free(str_parsed,
-				parse_substring(shell, *str, word_break - *str));
-		quote_end = ft_strchr(word_break + 1, *word_break);
-		if (!quote_end)
-			str_parsed = ft_stradd(str_parsed, *word_break);
-		if (!quote_end)
-			quote_end = word_break;
-		else if (*word_break == '\'')
-			str_parsed = ft_strnjoin(str_parsed, word_break + 1, quote_end - word_break - 1);
-		else
-			str_parsed = ft_strjoin_free(str_parsed, parse_substring(shell, word_break + 1, quote_end - word_break - 1));
-		*str = quote_end + 1;
+		to_add = parse_substring(shell, *str, word_break - *str);
+		wildcards = detect_wildcards(wildcards, str_parsed, to_add);
+		str_parsed = ft_strjoin_free(str_parsed, to_add);
+		*str = word_break;
+		to_add = parse_quote(shell, str);
+		str_parsed = ft_strjoin_free(str_parsed, to_add);
 		word_break = ft_strchr_any(*str, "\'\" \t><|&()");
 	}
 	if (!word_break)
 		word_break = ft_strchr(*str, 0);
-	str_parsed = ft_strjoin_free(str_parsed,
-			parse_substring(shell, *str, word_break - *str));
+	to_add = parse_substring(shell, *str, word_break - *str);
+	wildcards = detect_wildcards(wildcards, str_parsed, to_add);
+	str_parsed = ft_strjoin_free(str_parsed, to_add);
 	*str = word_break;
-	return (init_element(str_parsed, WORD));
+	return (build_new_elements(str_parsed, wildcards));
 }
+
+char	*parse_quote(t_shell *shell, char **str)
+{
+	char	*quote_end;
+	char	*to_add;
+
+	to_add = NULL;
+	quote_end = ft_strchr(*str + 1, **str);
+	if (!quote_end)
+		to_add = ft_stradd(to_add, **str);
+	if (!quote_end)
+		quote_end = *str;
+	else if (**str == '\'')
+		to_add = ft_substr(*str, 1, quote_end - *str - 1);
+	else
+		to_add = parse_substring(shell, *str + 1, quote_end - *str - 1);
+	*str = quote_end + 1;
+	return (to_add);
+}
+
+int	*detect_wildcards(int *wildcards, char *str_parsed, char *to_add)
+{
+	char	*wc;
+	int		count;
+	int		*new_wc;
+
+	count = 0;
+	while (wildcards && wildcards[count] != -1)
+		count++;
+	wc = ft_strchr(to_add, '*');
+	while (wc)
+	{
+		wc = ft_strchr(wc + 1, '*');
+		count++;
+	}
+	new_wc = malloc(sizeof(int) * (count + 1));
+	count = -1;
+	while (++count != -1 && wildcards && wildcards[count] != -1)
+		new_wc[count] = wildcards[count];
+	wc = ft_strchr(to_add, '*');
+	while (wc)
+	{
+		new_wc[count++] = ft_strlen(str_parsed) + wc - to_add;
+		wc = ft_strchr(wc + 1, '*');
+	}
+	new_wc[count] = -1;
+	return (new_wc);
+}
+
+/* int	**detect_wildcards(int **wildcards, char *str_parsed, char *to_add) */
+/* { */
+/* 	char	*wc; */
+/* 	int		*wc_pos; */
+
+/* 	wc = ft_strchr(to_add, '*'); */
+/* 	while (wc) */
+/* 	{ */
+/* 		wc_pos = malloc(sizeof(int)); */
+/* 		*wc_pos = ft_strlen(str_parsed) + wc - to_add; */
+/* 		ft_tab_insert_last((void ***)&wildcards, wc_pos); */
+/* 		wc = ft_strchr(wc + 1, '*'); */
+/* 	} */
+/* 	return (wildcards); */
+/* } */
 
 char	*parse_substring(t_shell *shell, char *str, int length)
 {

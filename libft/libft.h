@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/27 15:57:22 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:13:55 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	ft_destroy_tab(void ***tab, void (*destroy)(void *));
 void	**ft_add_row(void **tab);
 size_t	ft_tablen(const void **tab);
 void	ft_tab_insert(void ***tab, int position, void *to_insert);
+void	ft_tab_insert_last(void ***tab, void *to_insert);
 
 /******************* Printf ******************************/
 typedef struct s_arg	t_arg;

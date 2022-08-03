@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:19:28 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 12:50:01 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef enum e_elem_type {
 	REDIRECT,
 	OPERATOR,
 	PIPE,
-	PARENTHESIS
+	PARENTHESIS,
+	WILDCARD
 }			t_elem_type;
 
 typedef struct s_cmd_element {
@@ -151,15 +152,16 @@ void			print_element_list(t_cmd_element *elem);
 t_cmd_element	*split_into_element_list(t_shell *shell, char *str);
 t_cmd_element	*parse_element_at(t_shell *shell, char **str);
 t_cmd_element	*parse_word_element(t_shell *shell, char **str);
+char			*parse_quote(t_shell *shell, char **str);
+int				*detect_wildcards(int *wildcards, char *str_parsed, char *to_add);
 char			*parse_substring(t_shell *shell, char *str, int length);
 char			*parse_var_call(t_shell *shell, char **str);
 
 /***		cmd_wildcards.c		******/
-void			handle_wildcards(t_cmd_element **list);
-t_cmd_element	*replace_cmd_elements_by(t_cmd_element *current,
-					char **matching_files);
-char			**get_matching_files(char *expr);
-int				is_matching_wildcard(char *name, char *expr);
+t_cmd_element	*build_new_elements(char *str, int *wc_pos);
+t_cmd_element	*build_elements_from_matches(char **matching_files);
+char			**get_matching_files(char *expr, char **wildcards);
+int				is_matching_wildcard(char *name, char *expr, char **wildcards);
 int				advance_in_word(char **name,
 					char **expr, int length, char *match);
 
