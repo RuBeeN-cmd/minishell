@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 12:49:31 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:11:04 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	char	**wc;
 	char	**matching_files;
 
-	if (!wc_pos)
+	if (wc_pos[0] == -1)
 		return (init_element(str, WORD));
-	wc = malloc(sizeof(char *) * (ft_tablen((const void **)wc_pos + 1)));
+	count = 0;
+	while (wc_pos[count] != -1)
+		count++;
+	wc = malloc(sizeof(char *) * (count + 1));
 	count = -1;
 	while (wc_pos[++count] != -1)
 		wc[count] = str + wc_pos[count];
