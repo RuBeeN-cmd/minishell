@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 14:11:04 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:09:39 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	wc[count] = NULL;
 	free(wc_pos);
 	matching_files = get_matching_files(str, wc);
+	ft_sort_tab_alpha(matching_files);
 	free(wc);
 	if (!matching_files)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:05:51 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:07:01 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	*try_path(char *path, char *exec)
 	if (ft_strlen(exec_path) && exec_path[ft_strlen(exec_path) - 1] != '/')
 		exec_path = ft_strnjoin(exec_path, "/", 1);
 	exec_path = ft_strjoin(exec_path, exec);
-	if (!access(exec_path, F_OK))
+	if (!access(exec_path, F_OK) && ft_strlen(exec))
 		return (exec_path);
 	else
 		free(exec_path);
