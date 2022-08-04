@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 15:23:28 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:17:44 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 		if (!exec_path)
 		{
 			ft_printf_fd(2, "%s: command not found.\n", cmd->argv[0]);
+			close_redirections(shell, cmd);
+			destroy_tshell(shell);
 			exit(127);
 		}
 		free(cmd->argv[0]);
