@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/02 13:40:43 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/04 16:20:40 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,6 @@ int	cd(t_shell *shell, int argc, char **argv)
 	return (EXIT_FAILURE);
 }
 
-int	word_contain_only(char *str, char c)
-{
-	if (str)
-	{
-		while (*str)
-		{
-			if (*str != c)
-				return (0);
-			str++;
-		}
-		return (1);
-	}
-	return (0);
-}
-
 int	echo(t_shell *shell, int argc, char **argv)
 {
 	int	n_flag;
@@ -85,16 +70,7 @@ int	echo(t_shell *shell, int argc, char **argv)
 		ft_putchar_fd('\n', 1);
 	else
 	{
-		while (argv[i] && argv[i][0] == '-')
-		{
-			if (word_contain_only(argv[i] + 1, 'n'))
-			{
-				n_flag = 1;
-				i++;
-			}
-			else
-				break ;
-		}
+		n_flag = check_n_flag(argv, &i);
 		while (i < argc)
 		{
 			ft_putstr_fd(argv[i], 1);
@@ -107,7 +83,7 @@ int	echo(t_shell *shell, int argc, char **argv)
 	}
 	return (EXIT_SUCCESS);
 }
-// exit max : 9223372036854775807
+
 int	exit_builtin(t_shell *shell, int argc, char **argv)
 {
 	unsigned char	exit_status;
@@ -130,11 +106,7 @@ int	exit_builtin(t_shell *shell, int argc, char **argv)
 		if (ft_isnumber(argv[i]))
 			exit_status = (unsigned char) ft_atoi(argv[1]);
 		else
-		{
-			ft_printf_fd(2, "exit: numeric argument required\n");
-			destroy_tshell(shell);
-			exit(2);
-		}
+			exit_non_num_arg(shell);
 		i++;
 	}
 	destroy_tshell(shell);

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 14:45:13 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/29 12:14:49 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/04 17:19:27 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,38 @@ void	crea_mod_env_var(t_shell *shell, char **var)
 		env_var_ptr->value = var[1];
 	else
 		add_env_var(shell, var[0], var[1]);
+	free(var);
+}
+
+int	check_n_flag(char **argv, int *i)
+{
+	int	n_flag;
+
+	n_flag = 0;
+	while (argv[*i] && argv[*i][0] == '-')
+	{
+		if (word_contain_only(argv[*i] + 1, 'n'))
+		{
+			n_flag = 1;
+			(*i)++;
+		}
+		else
+			break ;
+	}
+	return (n_flag);
+}
+
+int	word_contain_only(char *str, char c)
+{
+	if (str)
+	{
+		while (*str)
+		{
+			if (*str != c)
+				return (0);
+			str++;
+		}
+		return (1);
+	}
+	return (0);
 }

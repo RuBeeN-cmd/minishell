@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 14:41:51 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/04 17:15:02 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ t_cmd_element	*split_into_element_list(t_shell *shell, char *str);
 t_cmd_element	*parse_element_at(t_shell *shell, char **str);
 t_cmd_element	*parse_word_element(t_shell *shell, char **str);
 char			*parse_quote(t_shell *shell, char **str);
-int				*detect_wildcards(int *wildcards, char *str_parsed, char *to_add);
+int				*detect_wildcards(int *wildcards,
+					char *str_parsed, char *to_add);
 char			*parse_substring(t_shell *shell, char *str, int length);
 char			*parse_var_call(t_shell *shell, char **str);
 
@@ -180,28 +181,36 @@ t_redir			**parse_redirections(t_cmd_element *list);
 ////////////		built in		//////////////
 //////////////////////////////////////////////////
 
-/**	builtin_handler	**/
+/**	builtin_handler.c	**/
 t_builtin		*init_builtin(char *name,
 					int (*f)(t_shell *shell, int argc, char **argv));
 void			init_builtin_list(t_shell *shell);
 void			destroy_builtin_list(t_shell *shell);
 int				call_builtin_if_exists(t_shell *shell, t_cmd *cmd);
 
-/**	builtin_basics	**/
+/**	builtin_basics.c	**/
 int				pwd(t_shell *shell, int argc, char **argv);
 int				cd(t_shell *shell, int argc, char **argv);
 int				echo(t_shell *shell, int argc, char **argv);
 int				exit_builtin(t_shell *shell, int argc, char **argv);
 
-/**	builtin_env		**/
+/**	builtin_env.c		**/
 int				unset(t_shell *shell, int argc, char **argv);
 int				env(t_shell *shell, int argc, char **argv);
 int				export(t_shell *shell, int argc, char **argv);
 
-/**	builtin_env		**/
+/**	builtin_utils.c		**/
 void			replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd);
 int				ft_isnumber(const char *str);
 void			crea_mod_env_var(t_shell *shell, char **var);
+int				check_n_flag(char **argv, int *i);
+int				word_contain_only(char *str, char c);
+
+/**	builtin_utils_bis.c		**/
+void			exit_non_num_arg(t_shell *shell);
+int				is_valid_identifier(char *name);
+int				exit_fork(t_shell *shell, int exit_status);
+char			**get_var_export(char *str);
 
 //////////////////////////////////////////////////
 ////////////		execution  		//////////////

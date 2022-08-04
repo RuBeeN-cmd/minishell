@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/28 14:45:03 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/04 17:19:49 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,23 @@ int	export(t_shell *shell, int argc, char **argv)
 		eq_ptr = ft_strchr(argv[i], '=');
 		if (eq_ptr && eq_ptr != argv[i])
 		{
-			var = ft_split(argv[i], '=');
-			if (!var[1])
-				var[1] = ft_strdup("");
-			crea_mod_env_var(shell, var);
-			free(var);
-			if (shell->fork)
-				exit(EXIT_SUCCESS);
+			var = get_var_export(argv[i]);
+			if (is_valid_identifier(var[0]))
+			{
+				crea_mod_env_var(shell, var);
+				return (exit_fork(shell, EXIT_SUCCESS));
+			}
+			ft_free_tab((void **) var);
+			ft_printf_fd(2, "export: not a valid identifier\n");
+			return (exit_fork(shell, EXIT_FAILURE));
 		}
 		else if (eq_ptr == argv[i])
 		{
 			ft_printf_fd(2, "export: invalids arguments\n");
-			return (EXIT_FAILURE);
+			return (exit_fork(shell, EXIT_FAILURE));
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (exit_fork(shell, EXIT_SUCCESS));
 }
 
 int	unset(t_shell *shell, int argc, char **argv)
