@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 18:58:58 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/21 20:20:17 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:21:26 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	init_pipe(int *pipe)
 
 void	close_fd(int *fd)
 {
-	close(*fd);
+	if (*fd != -1)
+		close(*fd);
 	*fd = -1;
 }
 

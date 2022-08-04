@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 14:38:48 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:23:28 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ void	execute(t_shell *shell)
 			pipe(output);
 		if (!ret)
 			fork_cmd(shell, shell->cmd_tab[count], (int *)input, (int *)output);
-		if (input[0] != -1)
-			close_fd((int *)input);
-		if (output[1] != -1)
-			close_fd((int *)output + 1);
+		close_fd((int *)input);
+		close_fd((int *)output + 1);
 		close_redirections(shell, shell->cmd_tab[count]);
 		copy_pipe_from((int *)input, (int *)output);
 	}
