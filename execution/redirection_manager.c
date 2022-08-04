@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_manager.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 13:17:56 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:49:11 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	set_redirections(t_shell *shell, t_cmd *cmd)
 			last_out = redir;
 		else if (redir->type == IN || redir->type == UNTIL)
 			last_in = redir;
-		count++;
 	}
 	if (last_out)
 		shell->stdout_dup = dup(1);
