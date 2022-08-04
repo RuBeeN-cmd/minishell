@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/02 11:13:55 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:51:04 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*ft_strchr_any(char *str, char *charset);
 char	*ft_strsubstr(const char *str, const char *search, size_t to_search);
 char	*ft_strnjoin(char *s1, char *s2, int length);
 char	*ft_strjoin_free(char *s1, char *s2);
+void	ft_sort_tab_alpha(char **str);
 
 /**	Maths utils **/
 int		ft_lower(int a, int b);
