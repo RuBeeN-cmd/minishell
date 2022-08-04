@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 12:20:16 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:17:56 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	set_redirections(t_shell *shell, t_cmd *cmd)
 			last_out = redir;
 		else if (redir->type == IN || redir->type == UNTIL)
 			last_in = redir;
+		count++;
 	}
 	if (last_out)
 		shell->stdout_dup = dup(1);
@@ -76,7 +77,7 @@ void	close_redirections(t_shell *shell, t_cmd *cmd)
 	
 	if (shell->stdin_dup != -1)
 	{
-		dup2(shell->stdin_dup, 1);
+		dup2(shell->stdin_dup, 0);
 		close(shell->stdin_dup);
 		shell->stdin_dup = -1;
 	}
@@ -139,6 +140,8 @@ int	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 		free(line);
 		line = readline("");
 	}
+	if (!line)
+		ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", last_until->str);
 	if (line)
 		free(line);
 	close(last_until->fd);

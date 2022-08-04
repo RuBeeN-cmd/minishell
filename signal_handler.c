@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:36:59 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/09 15:43:37 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:24:37 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ void	set_signal_handlers(void)
 {
 	signal(SIGINT, &receive);
 	signal(SIGQUIT, &receive);
+}
+
+void	remove_signal_handlers(void)
+{
+	signal(SIGINT, &receive_while_forked);
+	signal(SIGQUIT, &receive_while_forked);
+}
+
+void	receive_while_forked(int signum)
+{
+	if (signum == SIGINT)
+		printf("\n");
 }
 
 void	receive(int signum)

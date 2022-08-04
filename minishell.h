@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 12:50:01 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:23:35 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int				main(int argc, char **argv, char **env);
 
 /********	signal_handler.c	*******/
 void			set_signal_handlers(void);
+void			remove_signal_handlers(void);
+void			receive_while_forked(int signum);
 void			receive(int signum);
 
 /********	tshell.c		***********/

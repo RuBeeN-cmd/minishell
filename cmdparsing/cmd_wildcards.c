@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 14:11:04 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 17:47:33 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	char	**matching_files;
 
 	if (wc_pos[0] == -1)
+	{
+		free(wc_pos);
 		return (init_element(str, WORD));
+	}
 	count = 0;
 	while (wc_pos[count] != -1)
 		count++;
@@ -32,7 +35,8 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	matching_files = get_matching_files(str, wc);
 	free(wc);
 	if (!matching_files)
-		return (NULL);
+		return (init_element(str, WORD));
+	free(str);
 	return (build_elements_from_matches(matching_files));
 }
 
@@ -71,7 +75,8 @@ char	**get_matching_files(char *expr, char **wildcards)
 	dirent = readdir(dir);
 	while (dirent)
 	{
-		if (is_matching_wildcard(dirent->d_name, expr, wildcards))
+		if (((dirent->d_name[0] == '.' && expr[0] == '.') || dirent->d_name[0] != '.')
+			&& is_matching_wildcard(dirent->d_name, expr, wildcards))
 			ft_tab_insert((void ***)&matching_files,
 				ft_tablen((const void **)matching_files),
 				ft_strdup(dirent->d_name));

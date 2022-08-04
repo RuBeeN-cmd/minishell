@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:05:51 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:17:32 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ void	execute(t_shell *shell)
 
 void	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
 {
+	remove_signal_handlers();
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		perror("fork");
 	else if (!cmd->pid)
 	{
+		
 		shell->fork = 1;
 		if (input[0] != -1)
 		{
@@ -83,6 +85,8 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	set_redirections(shell, cmd);
 	execve(cmd->argv[0], cmd->argv, cmd->env);
+	close_redirections(shell, cmd);
+	destroy_tshell(shell);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);
 }
@@ -119,7 +123,7 @@ char	*try_path(char *path, char *exec)
 		exec_path = ft_strnjoin(exec_path, path, ft_strlen(path));
 	if (ft_strlen(exec_path) && exec_path[ft_strlen(exec_path) - 1] != '/')
 		exec_path = ft_strnjoin(exec_path, "/", 1);
-	exec_path = ft_strjoin(exec_path, exec);
+	exec_path = ft_strnjoin(exec_path, exec, ft_strlen(exec));
 	if (!access(exec_path, F_OK))
 		return (exec_path);
 	else

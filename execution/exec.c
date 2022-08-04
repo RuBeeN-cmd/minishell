@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/29 14:14:01 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:17:55 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ int	exec(t_shell *shell, t_cmd_element *list)
 		count = -1;
 		while (shell->cmd_tab[++count])
 			waitpid(shell->cmd_tab[count]->pid, &shell->cmd_tab[count]->status, 0);
-		shell->exit_status = WEXITSTATUS(shell->cmd_tab[count - 1]->status);
+		if (WIFEXITED(shell->cmd_tab[count - 1]->status))
+			shell->exit_status = WEXITSTATUS(shell->cmd_tab[count - 1]->status);
+		else if (WIFSIGNALED(shell->cmd_tab[count - 1]->status))
+			shell->exit_status = 128 + WTERMSIG(shell->cmd_tab[count - 1]->status);
 	}
+	set_signal_handlers();
+	if (shell->exit_status == 131)
+		ft_printf_fd(2, "Quit (core dumped)\n");
 	ft_destroy_tab((void ***)&shell->cmd_tab, (void (*)(void *))destroy_cmd);
-	shell->cmd_tab = NULL;
 	if (shell->exit_status == EXIT_SUCCESS)
 		return (0);
 	return (1);

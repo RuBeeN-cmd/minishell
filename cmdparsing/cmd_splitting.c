@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 13:58:05 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/03 17:45:00 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ int	*detect_wildcards(int *wildcards, char *str_parsed, char *to_add)
 		wc = ft_strchr(wc + 1, '*');
 	}
 	new_wc[count] = -1;
+	if (wildcards)
+		free(wildcards);
 	return (new_wc);
 }
 
