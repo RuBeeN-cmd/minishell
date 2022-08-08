@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 14:33:28 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/05 10:49:00 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ char	**get_matching_files(char *expr, char **wildcards)
 	dirent = readdir(dir);
 	while (dirent)
 	{
-		if (((dirent->d_name[0] == '.' && expr[0] == '.') || dirent->d_name[0] != '.')
+		if (((dirent->d_name[0] == '.' && expr[0] == '.')
+				|| dirent->d_name[0] != '.')
 			&& is_matching_wildcard(dirent->d_name, expr, wildcards))
 			ft_tab_insert((void ***)&matching_files,
 				ft_tablen((const void **)matching_files),

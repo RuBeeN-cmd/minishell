@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:05:08 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/04 17:14:46 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/08 12:15:38 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ int	is_valid_identifier(char *name)
 	if (name)
 	{
 		i = 0;
-		if ((name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_')
+		if ((name[0] >= 'A' && name[0] <= 'Z')
+			|| (name[0] >= 'a' && name[0] <= 'z') || name[0] == '_')
 		{
 			while ((name[i] >= 'A' && name[i] <= 'Z')
+				|| (name[i] >= 'a' && name[i] <= 'z')
 				|| (name[i] >= '0' && name[i] <= '9')
 				|| name[i] == '_')
 				i++;

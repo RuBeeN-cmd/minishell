@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 15:49:11 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 11:07:25 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,7 @@ int	init_redirections(t_cmd *cmd)
 	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		redir = cmd->redir_tab[count];
-		if (redir->type == APPEND)
-			redir->fd = open(redir->str, O_CREAT | O_APPEND | O_RDWR | O_CLOEXEC, 0644);
-		if (redir->type == REPLACE)
-			redir->fd = open(redir->str, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0644);
-		if (redir->type == IN)
-			redir->fd = open(redir->str, O_RDONLY | O_CLOEXEC);
+		init_redir_fd(redir);
 		if (redir->type == UNTIL)
 			last_until = redir;
 		if (redir->fd == -1)
@@ -73,7 +68,7 @@ void	close_redirections(t_shell *shell, t_cmd *cmd)
 {
 	int		count;
 	t_redir	*redir;
-	
+
 	if (shell->stdin_dup != -1)
 	{
 		dup2(shell->stdin_dup, 0);
@@ -109,7 +104,7 @@ char	*find_unused_filename(void)
 		while (filename[index] == '9' && index > 3)
 			filename[index--] = '0';
 		if (index <= 3)
-			break;
+			break ;
 		filename[index] += 1;
 	}
 	if (access(filename, F_OK) != 0)
@@ -133,14 +128,11 @@ int	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 		return (1);
 	line = readline("");
 	while (line && ft_strcmp(line, last_until->str) != 0)
-	{
-		ft_printf_fd(last_until->fd, line);
-		ft_printf_fd(last_until->fd, "\n");
-		free(line);
-		line = readline("");
-	}
+		line = get_new_line(last_until->fd, line);
 	if (!line)
-		ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", last_until->str);
+		ft_printf_fd(2,
+			"warning : here-document delimited by EOF (wanted '%s')\n",
+			last_until->str);
 	if (line)
 		free(line);
 	close(last_until->fd);

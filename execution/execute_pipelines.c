@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 16:17:44 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/05 10:50:27 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
 		perror("fork");
 	else if (!cmd->pid)
 	{
-		
 		shell->fork = 1;
 		if (input[0] != -1)
 		{

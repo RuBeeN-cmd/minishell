@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 19:16:12 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/05 10:46:47 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **env)
 	shell = init_tshell(env);
 	set_signal_handlers();
 	str = readline(shell->prompt);
-	/* str = ft_strdup("test1"); */
 	while (str)
 	{
 		list = split_into_element_list(shell, str);
@@ -35,15 +34,7 @@ int	main(int argc, char **argv, char **env)
 			add_history(str);
 		free(str);
 		str = readline(shell->prompt);
-		/* str = NULL; */
 	}
 	destroy_tshell(shell);
 	printf("exit\n");
-}
-
-/** Not used currently **/
-void	clean_exit(t_shell *shell, int exit_code)
-{
-	destroy_tshell(shell);
-	exit(exit_code);
 }

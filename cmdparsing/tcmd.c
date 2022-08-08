@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:07:31 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/05 10:49:49 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	destroy_cmd(t_cmd *cmd)
 	if (cmd->argv)
 		ft_destroy_tab((void ***)&cmd->argv, &free);
 	if (cmd->redir_tab)
-		ft_destroy_tab((void ***)&cmd->redir_tab, (void (*)(void *))destroy_redir);
+		ft_destroy_tab((void ***)&cmd->redir_tab,
+			(void (*)(void *))destroy_redir);
 	if (cmd->env)
 		ft_destroy_tab((void ***)&cmd->env, &free);
 	if (cmd->tmpfile_name)

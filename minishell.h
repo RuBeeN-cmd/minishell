@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 17:15:02 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 11:19:41 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void			destroy_element(t_cmd_element *elem);
 void			destroy_element_list(t_cmd_element *elem);
 t_cmd_element	*detach_element(t_cmd_element **list, t_cmd_element *elem);
 void			print_element(t_cmd_element *elem);
-void			print_element_list(t_cmd_element *elem);
 
 /***		cmd_splitting.c		******/
 t_cmd_element	*split_into_element_list(t_shell *shell, char *str);
@@ -157,8 +156,6 @@ t_cmd_element	*parse_word_element(t_shell *shell, char **str);
 char			*parse_quote(t_shell *shell, char **str);
 int				*detect_wildcards(int *wildcards,
 					char *str_parsed, char *to_add);
-char			*parse_substring(t_shell *shell, char *str, int length);
-char			*parse_var_call(t_shell *shell, char **str);
 
 /***		cmd_wildcards.c		******/
 t_cmd_element	*build_new_elements(char *str, int *wc_pos);
@@ -176,6 +173,13 @@ int				is_parenthesis_syntax_valid(t_cmd_element *list);
 t_cmd			**parse_final(t_cmd_element *list);
 t_cmd			*parse_single_cmd(t_cmd_element *list);
 t_redir			**parse_redirections(t_cmd_element *list);
+
+/***		utils.c	*******/
+char			*parse_substring(t_shell *shell, char *str, int length);
+char			*parse_var_call(t_shell *shell, char **str);
+void			print_element_list(t_cmd_element *elem);
+void			detatch_pipe(t_cmd_element **current,
+					t_cmd_element **list_start, t_cmd ***tab, int *count);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
@@ -250,5 +254,10 @@ void			remove_pipe_parenthesis(t_cmd_element **input);
 int				ft_split_cmd(t_shell *shell, t_cmd_element *input);
 void			ft_get_blocks(t_cmd_element *input, t_cmd_element **cmd,
 					t_cmd_element **operator, t_cmd_element **nxt_block);
+
+/**  utils.c  **/
+char			*get_new_line(int fd, char *line);
+void			init_redir_fd(t_redir *redir);
+void			set_exit_status(t_shell *shell, int count);
 
 #endif

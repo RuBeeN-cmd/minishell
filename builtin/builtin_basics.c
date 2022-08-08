@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 16:20:40 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 10:45:52 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	pwd(t_shell *shell, int argc, char **argv)
 		pwd = getcwd(pwd, 0);
 		ft_printf("%s\n", pwd);
 		free(pwd);
-		return (EXIT_SUCCESS);
+		return (exit_fork(shell, EXIT_SUCCESS));
 	}
 	else
 		ft_printf_fd(2, "pwd: too many arguments\n");
-	return (EXIT_FAILURE);
+	return (exit_fork(shell, EXIT_FAILURE));
 }
 
 int	cd(t_shell *shell, int argc, char **argv)
@@ -49,13 +49,13 @@ int	cd(t_shell *shell, int argc, char **argv)
 		if (pwd)
 			pwd->value = getcwd(pwd->value, 0);
 		if (ret != -1)
-			return (EXIT_SUCCESS);
+			return (exit_fork(shell, EXIT_SUCCESS));
 		else
 			perror("cd");
 	}
 	else
 		ft_printf_fd(2, "cd: wrong number of arguments\n");
-	return (EXIT_FAILURE);
+	return (exit_fork(shell, EXIT_FAILURE));
 }
 
 int	echo(t_shell *shell, int argc, char **argv)
@@ -81,7 +81,7 @@ int	echo(t_shell *shell, int argc, char **argv)
 			i++;
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (exit_fork(shell, EXIT_SUCCESS));
 }
 
 int	exit_builtin(t_shell *shell, int argc, char **argv)
