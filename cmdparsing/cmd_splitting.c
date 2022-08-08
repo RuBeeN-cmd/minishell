@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/03 17:45:00 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/06 11:46:10 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char	*parse_quote(t_shell *shell, char **str)
 	to_add = NULL;
 	quote_end = ft_strchr(*str + 1, **str);
 	if (!quote_end)
-		to_add = ft_stradd(to_add, **str);
+		to_add = ft_strnjoin(to_add, *str, 1);
 	if (!quote_end)
 		quote_end = *str;
 	else if (**str == '\'')
@@ -203,7 +203,7 @@ char	*parse_substring(t_shell *shell, char *str, int length)
 	str_parsed = NULL;
 	base_str = str;
 	var_str = ft_strchr(str, '$');
-	while (var_str && var_str - str < length)
+	while (var_str && var_str - base_str < length)
 	{
 		str_parsed = ft_strnjoin(str_parsed, str, var_str - str);
 		str = var_str;
@@ -222,20 +222,22 @@ char	*parse_var_call(t_shell *shell, char **str)
 
 	*str = *str + 1;
 	base_str = *str;
-	while (**str && !ft_str_contains(" \t-+=><&|()\'\"", **str)
-		&& *(*str - 1) != '?')
+	if (ft_isdigit(**str) || **str == '?')
 		*str = *str + 1;
+	else
+		while (**str && (ft_isalpha(**str) || ft_isdigit(**str) || **str == '_'))
+			*str = *str + 1;
 	if (*str == base_str)
 		return (ft_strdup("$"));
-	else
+	str_var = ft_substr(base_str, 0, *str - base_str);
+	if (!ft_strcmp(str_var, "?"))
 	{
-		str_var = ft_substr(base_str, 0, *str - base_str);
-		if (!ft_strcmp(str_var, "?"))
-			return (ft_itoa(shell->exit_status));
-		var = get_env_var(shell, str_var);
 		free(str_var);
-		if (var)
-			return (ft_strdup(var->value));
-		return (ft_strdup(""));
+		return (ft_itoa(shell->exit_status));
 	}
+	var = get_env_var(shell, str_var);
+	free(str_var);
+	if (var)
+		return (ft_strdup(var->value));
+	return (ft_strdup(""));
 }

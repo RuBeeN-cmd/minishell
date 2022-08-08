@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 15:49:11 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/06 14:51:45 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,15 @@ char	*find_unused_filename(void)
 	return (NULL);
 }
 
+void	remove_signal_handlers_for_redir()
+{
+	signal(SIGINT, SIG_DFL);
+}
+
 int	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 {
 	char	*line;
+	pid_t	pid;
 
 	cmd->tmpfile_name = find_unused_filename();
 	if (!cmd->tmpfile_name)
@@ -131,18 +137,30 @@ int	handle_until_redirection(t_cmd *cmd, t_redir *last_until)
 		perror("open:");
 	if (last_until->fd == -1)
 		return (1);
-	line = readline("");
-	while (line && ft_strcmp(line, last_until->str) != 0)
+	/* remove_signal_handlers(); */
+	remove_signal_handlers_for_redir();
+	pid = fork();
+	if (!pid)
 	{
-		ft_printf_fd(last_until->fd, line);
-		ft_printf_fd(last_until->fd, "\n");
-		free(line);
 		line = readline("");
+		while (line && ft_strcmp(line, last_until->str) != 0)
+		{
+			ft_printf_fd(last_until->fd, line);
+			ft_printf_fd(last_until->fd, "\n");
+			free(line);
+			line = readline("");
+		}
+		if (!line)
+			ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", last_until->str);
+		if (line)
+			free(line);
+		close(last_until->fd);
+		destroy_cmd(cmd);
 	}
-	if (!line)
-		ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", last_until->str);
-	if (line)
-		free(line);
+	set_signal_handlers();
+	waitpid(pid, &cmd->status, 0);
+	if (!WIFEXITED(cmd->status && WIFSIGNALED(cmd->status) && WTERMSIG(cmd->status) == 2))
+		cmd->interrupt = 1;
 	close(last_until->fd);
 	last_until->fd = open(cmd->tmpfile_name, O_RDONLY | O_CLOEXEC);
 	return (0);

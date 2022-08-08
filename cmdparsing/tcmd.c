@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 14:07:31 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/06 14:45:40 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*init_cmd(void)
 	cmd->argv = NULL;
 	cmd->env = NULL;
 	cmd->tmpfile_name = NULL;
+	cmd->interrupt = 0;
 	cmd->redir_tab = NULL;
 	cmd->pid = -1;
 	cmd->status = -1;

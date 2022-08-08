@@ -1,5 +1,0 @@
-echo $_ $_
-echo | cat leaks
-export PATH=$PATH/.
-env var name A-Z+0-9+_ commence par A-Z+_
-unfinished quotes

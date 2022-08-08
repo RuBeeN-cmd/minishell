@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/29 11:48:27 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/06 14:46:03 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,8 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 	builtin = NULL;
 	ret = 0;
 	while (++count < BUILTIN_NB && cmd->argc > 0)
-	{
 		if (!ft_strcmp(shell->builtin_list[count]->name, cmd->argv[0]))
-		{
 			builtin = shell->builtin_list[count];
-			break ;
-		}
-	}
 	if (!builtin && cmd->argc > 0)
 		return (-1);
 	if (!shell->fork)
@@ -69,7 +64,15 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 	if (cmd->argc > 0 && !ret)
 		ret = builtin->f(shell, cmd->argc, cmd->argv);
 	if (shell->fork)
+	{
+		destroy_tshell(shell);
 		exit(ret);
+	}
+	if (cmd->interrupt)
+	{
+		shell->exit_status = 130;
+		cmd->interrupt = 0;
+	}
 	close_redirections(shell, cmd);
 	return (ret);
 }

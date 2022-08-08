@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 16:17:44 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/06 14:01:26 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output)
 		perror("fork");
 	else if (!cmd->pid)
 	{
-		
 		shell->fork = 1;
 		if (input[0] != -1)
 		{
@@ -86,8 +85,9 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	set_redirections(shell, cmd);
 	execve(cmd->argv[0], cmd->argv, cmd->env);
 	close_redirections(shell, cmd);
+	if (cmd->argv[0])
+		perror(cmd->argv[0]);
 	destroy_tshell(shell);
-	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);
 }
 

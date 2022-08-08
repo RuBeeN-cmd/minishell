@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:30:36 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:05:42 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/04 16:45:26 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	print_arg(int fd, t_arg *arg)
 {
 	int	length;
 
-	ft_putstr_fd(arg->formatted_str, 1);
+	ft_putstr_fd(arg->formatted_str, fd);
 	length = ft_strlen(arg->formatted_str);
 	if (arg->type == 'c' && arg->str[0] == 0)
 	{

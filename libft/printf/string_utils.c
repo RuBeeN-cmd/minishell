@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:14:37 by johrober          #+#    #+#             */
-/*   Updated: 2022/06/29 13:01:02 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/04 17:02:41 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_stradd(char *str, char c)
 	if (!new)
 		return (NULL);
 	count = -1;
-	while (str[++count])
+	while (str && str[++count])
 		new[count] = str[count];
 	new[count++] = c;
 	new[count] = 0;

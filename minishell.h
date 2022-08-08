@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 17:15:02 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/06 14:37:44 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_cmd {
 	char	*tmpfile_name;
 	pid_t	pid;
 	int		status;
+	int		interrupt;
 	t_redir	**redir_tab;
 }				t_cmd;
 
@@ -228,6 +229,8 @@ int				init_redirections(t_cmd *cmd);
 void			set_redirections(t_shell *shell, t_cmd *cmd);
 void			close_redirections(t_shell *shell, t_cmd *cmd);
 char			*find_unused_filename(void);
+void			set_redir_signal_handlers(void);
+void			receive_while_untilredir(int signum);
 int				handle_until_redirection(t_cmd *cmd, t_redir *last_until);
 
 /**	pipe_utils.c		**/
