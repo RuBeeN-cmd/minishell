@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:07:44 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 10:48:46 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	is_parenthesis_syntax_valid(t_cmd_element *list)
 	cur = list;
 	while (cur)
 	{
-		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, "(") && parenthesis >= -1)
+		if (cur->type == PARENTHESIS
+			&& !ft_strcmp(cur->str, "(") && parenthesis >= -1)
 			words[++parenthesis] = 0;
 		if (cur->type == WORD && cur->next && cur->next->type == PARENTHESIS
 			&& !ft_strcmp(cur->next->str, "("))

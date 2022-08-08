@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/04 13:17:55 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/05 11:10:33 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exec(t_shell *shell, t_cmd_element *list)
 {
-	int count;
+	int	count;
 	int	nb_cmd;
 
 	shell->cmd_tab = parse_final(list);
@@ -26,11 +26,9 @@ int	exec(t_shell *shell, t_cmd_element *list)
 		execute(shell);
 		count = -1;
 		while (shell->cmd_tab[++count])
-			waitpid(shell->cmd_tab[count]->pid, &shell->cmd_tab[count]->status, 0);
-		if (WIFEXITED(shell->cmd_tab[count - 1]->status))
-			shell->exit_status = WEXITSTATUS(shell->cmd_tab[count - 1]->status);
-		else if (WIFSIGNALED(shell->cmd_tab[count - 1]->status))
-			shell->exit_status = 128 + WTERMSIG(shell->cmd_tab[count - 1]->status);
+			waitpid(shell->cmd_tab[count]->pid,
+				&shell->cmd_tab[count]->status, 0);
+		set_exit_status(shell, count);
 	}
 	set_signal_handlers();
 	if (shell->exit_status == 131)

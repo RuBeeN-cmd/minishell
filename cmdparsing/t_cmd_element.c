@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/26 16:06:20 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 10:57:21 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ void	destroy_element_list(t_cmd_element *elem)
 	}
 }
 
-/* 	Function that detach and destroy an element elem from the list, splitting it into two lists, */
-/* 	and returns the first element of the second list.
- *  Returns NULL if elem has not been found in the list. */
-/* 		list		Point to the list (so the adress can be changed) */
-/* 		elem		The elem to find and destroy */
 t_cmd_element	*detach_element(t_cmd_element **list, t_cmd_element *elem)
 {
 	t_cmd_element	*current;
@@ -90,20 +85,4 @@ void	print_element(t_cmd_element *elem)
 	else
 		printf("Unknown");
 	printf("\tContent\t\t%s\n", elem->str);
-}
-
-void	print_element_list(t_cmd_element *elem)
-{
-	t_cmd_element	*current;
-	int				count;
-
-	current = elem;
-	count = 1;
-	while (current)
-	{
-		printf("Element %2.d\n", count);
-		print_element(current);
-		count++;
-		current = current->next;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:22:28 by johrober          #+#    #+#             */
-/*   Updated: 2022/07/25 16:00:29 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/05 11:20:10 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,7 @@ t_cmd	**parse_final(t_cmd_element *list)
 	count = 0;
 	while (count < nb_pipe)
 	{
-		if (current->type == PIPE)
-		{
-			current = detach_element(&list_start, current);
-			ft_tab_insert((void ***)&tab, count++, parse_single_cmd(list_start));
-			destroy_element_list(list_start);
-			list_start = current;
-		}
+		detatch_pipe(&current, &list_start, &tab, &count);
 		current = current->next;
 	}
 	ft_tab_insert((void ***)&tab, count++, parse_single_cmd(list_start));
@@ -54,7 +48,8 @@ t_cmd	*parse_single_cmd(t_cmd_element *list)
 	while (current)
 	{
 		if (current->type == WORD && (!previous || previous->type != REDIRECT))
-			ft_tab_insert((void ***)&(cmd->argv), cmd->argc++, ft_strdup(current->str));
+			ft_tab_insert((void ***)&(cmd->argv),
+				cmd->argc++, ft_strdup(current->str));
 		previous = current;
 		current = current->next;
 	}
