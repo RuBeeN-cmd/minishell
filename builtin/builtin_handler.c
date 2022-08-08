@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/06 14:46:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/08 14:35:43 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 	if (!builtin && cmd->argc > 0)
 		return (-1);
 	if (!shell->fork)
-		ret = init_redirections(cmd);
+		ret = init_redirections(shell, cmd);
 	set_redirections(shell, cmd);
 	if (cmd->argc > 0 && !ret)
 		ret = builtin->f(shell, cmd->argc, cmd->argv);

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 12:57:56 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/08 14:35:14 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,13 +229,13 @@ char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
 
 /**	redirection_manager.c	**/
-int				init_redirections(t_cmd *cmd);
+int				init_redirections(t_shell *shell, t_cmd *cmd);
 void			set_redirections(t_shell *shell, t_cmd *cmd);
 void			close_redirections(t_shell *shell, t_cmd *cmd);
 char			*find_unused_filename(void);
 void			set_redir_signal_handlers(void);
 void			receive_while_untilredir(int signum);
-int				handle_until_redirection(t_cmd *cmd, t_redir *last_until);
+int				handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until);
 
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);

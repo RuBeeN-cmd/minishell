@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/05 10:46:47 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/08 14:33:27 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	main(int argc, char **argv, char **env)
 		str = readline(shell->prompt);
 	}
 	destroy_tshell(shell);
-	printf("exit\n");
+	//printf("exit\n");i
 }

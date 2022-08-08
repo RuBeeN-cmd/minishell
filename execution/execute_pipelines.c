@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 12:58:05 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/08 14:36:03 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute(t_shell *shell)
 	count = -1;
 	while (++count <= nb_pipe)
 	{
-		ret = init_redirections(shell->cmd_tab[count]);
+		ret = init_redirections(shell, shell->cmd_tab[count]);
 		init_pipe((int *)output);
 		if (nb_pipe > 0 && count < nb_pipe)
 			pipe(output);
