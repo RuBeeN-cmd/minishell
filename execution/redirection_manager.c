@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 15:00:33 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 16:02:58 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,11 +164,16 @@ int	handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until)
 			free(line);
 		close(last_until->fd);
 		destroy_tshell(shell);
-		exit(130);
+		if (interrupt)
+			exit(3);
+		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &cmd->status, 0);
-	if (interrupt)
+	if (WEXITSTATUS(cmd->status) == 3)
+	{
 		cmd->interrupt = 1;
+		shell->exit_status = 130;
+	}
 	set_signal_handlers();
 	close(last_until->fd);
 	last_until->fd = open(cmd->tmpfile_name, O_RDONLY | O_CLOEXEC);

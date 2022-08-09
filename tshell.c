@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/06 14:45:24 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:48:28 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_shell	*init_tshell(char **env)
 	shell->stdin_dup = -1;
 	shell->stdout_dup = -1;
 	shell->exit_status = 0;
+	shell->block_left = NULL;
 	init_builtin_list(shell);
 	return (shell);
 }
@@ -43,5 +44,7 @@ void	destroy_tshell(t_shell *shell)
 	if (shell->cmd_tab)
 		ft_destroy_tab((void ***)&shell->cmd_tab,
 			(void (*)(void *))destroy_cmd);
+	if (shell->block_left)
+		destroy_element_list(shell->block_left);
 	free(shell);
 }

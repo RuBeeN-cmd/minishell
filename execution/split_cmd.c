@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:05:15 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/25 11:39:48 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:51:36 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,31 @@ int	ft_split_cmd(t_shell *shell, t_cmd_element *input)
 	t_cmd_element	*op;
 	t_cmd_element	*cmd;
 	t_cmd_element	*nxt_block;
+	int				ret;
 
 	ft_get_blocks(input, &cmd, &op, &nxt_block);
 	if (!ft_strcmp(op->str, "&&"))
 	{
 		destroy_element(op);
-		if (!ft_exec_bloc(shell, cmd))
+		shell->block_left = nxt_block;
+		ret = ft_exec_bloc(shell, cmd);
+		shell->block_left = NULL;
+		if (!ret && ret != 130)
 			return (ft_exec_bloc(shell, nxt_block));
+		if (nxt_block)
+			destroy_element_list(nxt_block);
 		return (1);
 	}
 	else if (!ft_strcmp(op->str, "||"))
 	{
 		destroy_element(op);
-		if (ft_exec_bloc(shell, cmd))
+		shell->block_left = nxt_block;
+		ret = ft_exec_bloc(shell, cmd);
+		shell->block_left = NULL;
+		if (ret && ret != 130)
 			return (ft_exec_bloc(shell, nxt_block));
+		if (nxt_block)
+			destroy_element_list(nxt_block);
 		return (1);
 	}
 	return (0);

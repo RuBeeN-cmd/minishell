@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 12:39:08 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 14:36:03 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:03:21 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	execute(t_shell *shell)
 		close_fd((int *)output + 1);
 		close_redirections(shell, shell->cmd_tab[count]);
 		copy_pipe_from((int *)input, (int *)output);
+		if (shell->cmd_tab[count]->interrupt)
+			break;
 	}
 	close_fd((int *)input + 1);
 }

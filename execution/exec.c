@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/05 11:10:33 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 16:14:44 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@ int	exec(t_shell *shell, t_cmd_element *list)
 	{	
 		execute(shell);
 		count = -1;
-		while (shell->cmd_tab[++count])
+		while (shell->cmd_tab[++count] && !shell->cmd_tab[count]->interrupt)
 			waitpid(shell->cmd_tab[count]->pid,
 				&shell->cmd_tab[count]->status, 0);
-		set_exit_status(shell, count);
+		if (shell->cmd_tab[count] && !shell->cmd_tab[count]->interrupt)
+			set_exit_status(shell, count);
 	}
 	set_signal_handlers();
 	if (shell->exit_status == 131)
 		ft_printf_fd(2, "Quit (core dumped)\n");
 	ft_destroy_tab((void ***)&shell->cmd_tab, (void (*)(void *))destroy_cmd);
-	if (shell->exit_status == EXIT_SUCCESS)
-		return (0);
-	return (1);
+	return (shell->exit_status);
 }
 
 int	is_single_cmd(t_cmd_element *cmd)
