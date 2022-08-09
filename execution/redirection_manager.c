@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 14:34:59 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:00:33 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*find_unused_filename(void)
 	return (NULL);
 }
 
-int	interrupt;
+int	interrupt = 0;
 
 void	sigint_during_heredoc(int signum)
 {
@@ -172,5 +172,5 @@ int	handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until)
 	set_signal_handlers();
 	close(last_until->fd);
 	last_until->fd = open(cmd->tmpfile_name, O_RDONLY | O_CLOEXEC);
-	return (0);
+	return (cmd->interrupt);
 }
