@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/04 17:19:49 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 14:31:25 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,45 @@ int	env(t_shell *shell, int argc, char **argv)
 
 int	export(t_shell *shell, int argc, char **argv)
 {
-	char		**var;
-	char		*eq_ptr;
-	int			i;
+	int		exit_status;
+	int		i;
 
+	exit_status = EXIT_SUCCESS;
 	i = 0;
 	while (++i < argc)
 	{
-		eq_ptr = ft_strchr(argv[i], '=');
-		if (eq_ptr && eq_ptr != argv[i])
+		if (is_valid_expr(argv[i]))
+			crea_mod_env_var(shell, argv[i]);
+		else
 		{
-			var = get_var_export(argv[i]);
-			if (is_valid_identifier(var[0]))
-			{
-				crea_mod_env_var(shell, var);
-				return (exit_fork(shell, EXIT_SUCCESS));
-			}
-			ft_free_tab((void **) var);
-			ft_printf_fd(2, "export: not a valid identifier\n");
-			return (exit_fork(shell, EXIT_FAILURE));
-		}
-		else if (eq_ptr == argv[i])
-		{
-			ft_printf_fd(2, "export: invalids arguments\n");
-			return (exit_fork(shell, EXIT_FAILURE));
+			ft_printf_fd(2, "export: '%s': not a valid identifier.\n", argv[i]);
+			exit_status = EXIT_FAILURE;
 		}
 	}
-	return (exit_fork(shell, EXIT_SUCCESS));
+	return (exit_fork(shell, exit_status));
 }
 
 int	unset(t_shell *shell, int argc, char **argv)
 {
 	int	i;
+	int	exit_status;
 
 	i = 0;
+	exit_status = EXIT_SUCCESS;
 	while (++i < argc)
-		remove_env_var(shell, argv[i]);
+	{
+		if (is_valid_identifier(argv[i]))
+			remove_env_var(shell, argv[i]);
+		else
+		{
+			ft_printf_fd(2, "unset: '%s': not a valid identifier.\n", argv[i]);
+			exit_status = EXIT_FAILURE;
+		}
+	}
 	if (argc == 1)
 	{
 		ft_printf_fd(2, "unset: not enough arguments.\n");
-		return (EXIT_FAILURE);
+		return (exit_fork(shell, exit_status));
 	}
-	return (EXIT_SUCCESS);
+	return (exit_fork(shell, exit_status));
 }

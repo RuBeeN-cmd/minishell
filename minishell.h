@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 11:40:48 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 14:31:53 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int				export(t_shell *shell, int argc, char **argv);
 /**	builtin_utils.c		**/
 void			replace_old_pwd(t_shell *shell, t_env_var *pwd, t_env_var *old_pwd);
 int				ft_isnumber(const char *str);
-void			crea_mod_env_var(t_shell *shell, char **var);
+void			crea_mod_env_var(t_shell *shell, char *str);
 int				check_n_flag(char **argv, int *i);
 int				word_contain_only(char *str, char c);
 
@@ -216,6 +216,7 @@ void			exit_non_num_arg(t_shell *shell);
 int				is_valid_identifier(char *name);
 int				exit_fork(t_shell *shell, int exit_status);
 char			**get_var_export(char *str);
+int				is_valid_expr(char *expr);
 
 //////////////////////////////////////////////////
 ////////////		execution  		//////////////
