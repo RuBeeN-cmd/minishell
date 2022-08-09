@@ -6,11 +6,36 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:05:08 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/08 12:15:38 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 14:57:18 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
+
+void	export_without_args(t_shell *shell)
+{
+	char		**env;
+	t_env_var	*cur;
+	int			i;
+
+	i = 0;
+	while (shell->env[i])
+		i++;
+	env = malloc(sizeof(char *) * (i + 1));
+	env[i] = NULL;
+	i = -1;
+	while (shell->env[++i])
+	{
+		cur = shell->env[i];
+		env[i] = ft_strdup(cur->name);
+		env[i] = ft_strnjoin(env[i], "=", 1);
+		env[i] = ft_strnjoin(env[i], cur->value, ft_strlen(cur->value));
+	}
+	ft_sort_tab_alpha(env);
+	i = -1;
+	while (env[++i])
+		ft_printf("declare -x \"%s\"\n", env[i]);
+}
 
 void	exit_non_num_arg(t_shell *shell)
 {
@@ -59,3 +84,5 @@ char	**get_var_export(char *str)
 		var[1] = ft_strdup("");
 	return (var);
 }
+
+

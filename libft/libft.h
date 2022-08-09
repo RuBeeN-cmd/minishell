@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 17:18:32 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 14:50:14 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,17 @@ char	*ft_strchr_any(char *str, char *charset);
 char	*ft_strsubstr(const char *str, const char *search, size_t to_search);
 char	*ft_strnjoin(char *s1, char *s2, int length);
 char	*ft_strjoin_free(char *s1, char *s2);
+
+/**	 Array utils **/
 void	ft_sort_tab_alpha(char **str);
+void	**ft_free_tab(void **tab);
+void	ft_destroy_tab(void ***tab, void (*destroy)(void *));
+void	**ft_add_row(void **tab);
+size_t	ft_tablen(const void **tab);
+void	ft_tab_insert(void ***tab, int position, void *to_insert);
+void	ft_tab_insert_last(void ***tab, void *to_insert);
+void	**ft_tabdup(void **tab);
+void	ft_tabsort(void **tab, int (*cmp)(void *, void *));
 
 /**	Maths utils **/
 int		ft_lower(int a, int b);
@@ -94,12 +104,6 @@ int		ft_bigger(int a, int b);
 
 /** Global utils **/
 void	ft_free_all(int nbr, ...);
-void	**ft_free_tab(void **tab);
-void	ft_destroy_tab(void ***tab, void (*destroy)(void *));
-void	**ft_add_row(void **tab);
-size_t	ft_tablen(const void **tab);
-void	ft_tab_insert(void ***tab, int position, void *to_insert);
-void	ft_tab_insert_last(void ***tab, void *to_insert);
 
 /******************* Printf ******************************/
 typedef struct s_arg	t_arg;
