@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:53:57 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/05 11:20:46 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 11:36:41 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*parse_substring(t_shell *shell, char *str, int length)
 	str_parsed = NULL;
 	base_str = str;
 	var_str = ft_strchr(str, '$');
-	while (var_str && var_str - str < length)
+	while (var_str && var_str - base_str < length)
 	{
 		str_parsed = ft_strnjoin(str_parsed, str, var_str - str);
 		str = var_str;

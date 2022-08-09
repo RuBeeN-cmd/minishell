@@ -6,18 +6,27 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 14:45:13 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/04 17:19:27 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 11:48:31 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd)
+void	replace_old_pwd(t_shell *shell, t_env_var *pwd, t_env_var *old_pwd)
 {
-	free(old_pwd->value);
-	old_pwd->value = pwd->value;
-	pwd->value = NULL;
-	return ;
+	if (old_pwd)
+	{
+		if (pwd)
+		{
+			free(old_pwd->value);
+			old_pwd->value = pwd->value;
+			pwd->value = NULL;
+		}
+		else
+			remove_env_var(shell, "OLDPWD");
+	}
+	else if (pwd)
+		add_env_var(shell, ft_strdup("OLDPWD"), pwd->value);
 }
 
 int	ft_isnumber(const char *str)

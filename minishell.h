@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 14:35:14 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 11:40:48 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void			remove_env_var(t_shell *shell, char *name);
 
 /********	tenv_utils.c		***********/
 t_env_var		*get_env_var(t_shell *shell, char *name);
-void			add_env_var(t_shell	*shell, char *name, char *value);
+t_env_var		*add_env_var(t_shell	*shell, char *name, char *value);
 void			set_env_var(t_shell *shell, char *name, char *value);
 void			print_env(t_shell *shell);
 char			**env_to_string_array(t_shell *shell);
@@ -205,7 +205,7 @@ int				env(t_shell *shell, int argc, char **argv);
 int				export(t_shell *shell, int argc, char **argv);
 
 /**	builtin_utils.c		**/
-void			replace_old_pwd(t_env_var *pwd, t_env_var *old_pwd);
+void			replace_old_pwd(t_shell *shell, t_env_var *pwd, t_env_var *old_pwd);
 int				ft_isnumber(const char *str);
 void			crea_mod_env_var(t_shell *shell, char **var);
 int				check_n_flag(char **argv, int *i);

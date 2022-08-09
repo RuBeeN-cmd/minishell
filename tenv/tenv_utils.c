@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:47:58 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/12 12:59:37 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 11:40:24 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ t_env_var	*get_env_var(t_shell *shell, char *name)
 	return (NULL);
 }
 
-void	add_env_var(t_shell	*shell, char *name, char *value)
+t_env_var	*add_env_var(t_shell	*shell, char *name, char *value)
 {
 	int			len;
 
 	len = ft_tablen((const void **)shell->env);
 	shell->env = (t_env_var **)ft_add_row((void **)shell->env);
 	shell->env[len] = init_env_var(name, value);
+	return (shell->env[len]);
 }
 
 void	set_env_var(t_shell *shell, char *name, char *value)
