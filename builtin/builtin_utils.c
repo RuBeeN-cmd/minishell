@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 14:45:13 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 15:01:21 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 15:44:04 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	crea_mod_env_var(t_shell *shell, char *str)
 
 	var = get_var_export(str);
 	env_var_ptr = get_env_var(shell, var[0]);
-	if (env_var_ptr)
+	if (env_var_ptr && var[1])
 		env_var_ptr->value = var[1];
 	else
 	{

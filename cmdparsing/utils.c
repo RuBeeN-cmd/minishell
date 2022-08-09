@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:53:57 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 11:36:41 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 12:25:20 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ char	*parse_var_call(t_shell *shell, char **str)
 
 	*str = *str + 1;
 	base_str = *str;
-	while (**str && !ft_str_contains(" \t-+=><&|()\'\"", **str)
-		&& *(*str - 1) != '?')
+	if (**str && (ft_isdigit(**str) || **str == '?'))
 		*str = *str + 1;
+	else
+		while (**str && (ft_isalnum(**str) || **str == '_'))
+			*str = *str + 1;
 	if (*str == base_str)
 		return (ft_strdup("$"));
 	else

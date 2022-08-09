@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 14:31:25 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/09 15:33:41 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,17 @@ int	export(t_shell *shell, int argc, char **argv)
 	int		exit_status;
 	int		i;
 
+	if (argc == 1)
+		export_without_args(shell);
 	exit_status = EXIT_SUCCESS;
 	i = 0;
 	while (++i < argc)
 	{
-		if (is_valid_expr(argv[i]))
+		if (is_valid_identifier(argv[i], 1))
 			crea_mod_env_var(shell, argv[i]);
 		else
 		{
-			ft_printf_fd(2, "export: '%s': not a valid identifier.\n", argv[i]);
+			ft_printf_fd(2, "export: '%s': not a valid identifier\n", argv[i]);
 			exit_status = EXIT_FAILURE;
 		}
 	}
@@ -54,17 +56,17 @@ int	unset(t_shell *shell, int argc, char **argv)
 	exit_status = EXIT_SUCCESS;
 	while (++i < argc)
 	{
-		if (is_valid_identifier(argv[i]))
+		if (is_valid_identifier(argv[i], 0))
 			remove_env_var(shell, argv[i]);
 		else
 		{
-			ft_printf_fd(2, "unset: '%s': not a valid identifier.\n", argv[i]);
+			ft_printf_fd(2, "unset: '%s': not a valid identifier\n", argv[i]);
 			exit_status = EXIT_FAILURE;
 		}
 	}
 	if (argc == 1)
 	{
-		ft_printf_fd(2, "unset: not enough arguments.\n");
+		ft_printf_fd(2, "unset: not enough arguments\n");
 		return (exit_fork(shell, exit_status));
 	}
 	return (exit_fork(shell, exit_status));
