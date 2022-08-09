@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 11:40:48 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 15:00:16 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ int				check_n_flag(char **argv, int *i);
 int				word_contain_only(char *str, char c);
 
 /**	builtin_utils_bis.c		**/
+void			export_without_args(t_shell *shell);
 void			exit_non_num_arg(t_shell *shell);
 int				is_valid_identifier(char *name);
 int				exit_fork(t_shell *shell, int exit_status);

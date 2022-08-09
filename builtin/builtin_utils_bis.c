@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:05:08 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 14:57:18 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/09 15:02:39 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ void	export_without_args(t_shell *shell)
 	{
 		cur = shell->env[i];
 		env[i] = ft_strdup(cur->name);
-		env[i] = ft_strnjoin(env[i], "=", 1);
+		env[i] = ft_strnjoin(env[i], "=\"", 2);
 		env[i] = ft_strnjoin(env[i], cur->value, ft_strlen(cur->value));
+		env[i] = ft_strnjoin(env[i], "\"", 1);
 	}
 	ft_sort_tab_alpha(env);
 	i = -1;
 	while (env[++i])
-		ft_printf("declare -x \"%s\"\n", env[i]);
+		ft_printf("declare -x %s\n", env[i]);
+	ft_destroy_tab((void ***)&env, free);
 }
 
 void	exit_non_num_arg(t_shell *shell)
