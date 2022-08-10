@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 14:40:29 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/10 19:48:15 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ int	main(int argc, char **argv, char **env)
 	str = readline(shell->prompt);
 	while (str)
 	{
+		shell->interrupt = 0;
 		list = split_into_element_list(shell, str);
 		if (is_syntax_valid(list))
-			ft_exec_bloc(shell, list);
-		else if (ft_strlen(str))
-			ft_printf("Syntax error in command.\n");
+		{
+			create_all_heredocs(shell, list);
+			ft_exec_bloc(shell, list, 1);
+		}
 		if (ft_strlen(str))
 			add_history(str);
 		free(str);

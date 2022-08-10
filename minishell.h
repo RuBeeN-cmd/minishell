@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 16:47:22 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/10 19:51:46 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ typedef struct s_redir
 	t_redir_type	type;
 }			t_redir;
 
+typedef struct s_tmpfile
+{
+	char				*name;
+	int					fd;
+	struct s_tmpfile	*next;
+}				t_tmpfile;
+
 typedef struct s_cmd {
 	int		argc;	
 	char	**argv;
@@ -85,6 +92,7 @@ typedef struct s_shell {
 	char			*prompt;
 	char			*pwd;
 	int				exit_status;
+	int				interrupt;
 	int				fork;
 	struct termios	termios_shell;
 	int				stdout_dup;
@@ -92,7 +100,7 @@ typedef struct s_shell {
 	t_builtin		*builtin_list[BUILTIN_NB + 1];
 	t_cmd			**cmd_tab;
 	t_env_var		**env;
-	t_cmd_element	*block_left;
+	t_tmpfile		*tmpfile_list;
 }				t_shell;
 
 //////////////////////////////////////////////////
@@ -111,6 +119,7 @@ void			receive(int signum);
 /********	tshell.c		***********/
 t_shell			*init_tshell(char **env);
 void			destroy_tshell(t_shell *shell);
+void			destroy_tmpfile_list(t_shell *shell);
 
 //////////////////////////////////////////////////
 ////////////		tenv			//////////////
@@ -231,6 +240,8 @@ char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
 
 /**	redirection_manager.c	**/
+int				init_all_redirections(t_shell *shell);
+void			close_all_redirections(t_shell *shell);
 int				init_redirections(t_shell *shell, t_cmd *cmd);
 void			set_redirections(t_shell *shell, t_cmd *cmd);
 void			close_redirections(t_shell *shell, t_cmd *cmd);
@@ -239,6 +250,13 @@ void			set_redir_signal_handlers(void);
 void			receive_while_untilredir(int signum);
 int				handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until);
 
+/**until_redirection.c	**/
+void			sigint_during_heredoc(int signum);
+void			remove_signal_handlers_for_heredocs();
+void			create_all_heredocs(t_shell *shell, t_cmd_element *list);
+t_tmpfile		*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list);
+int				heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_element *list);
+
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);
 void			init_pipe(int *pipe);
@@ -246,9 +264,9 @@ void			close_fd(int *fd);
 int				count_pipes(t_cmd_element *list);
 
 /**  exec.c  **/
-int				ft_exec_bloc(t_shell *shell, t_cmd_element *input);
+int				ft_exec_bloc(t_shell *shell, t_cmd_element *input, int ex);
 int				is_single_cmd(t_cmd_element *cmd);
-int				exec(t_shell *shell, t_cmd_element *cmd);
+int				exec(t_shell *shell, t_cmd_element *cmd, int ex);
 
 /**  check_parenthesis.c  **/
 void			remove_parenthesis(t_cmd_element **input);
@@ -256,13 +274,13 @@ int				got_parenthesis(t_cmd_element *input);
 void			remove_pipe_parenthesis(t_cmd_element **input);
 
 /**  split_cmd.c  **/
-int				ft_split_cmd(t_shell *shell, t_cmd_element *input);
+int				ft_split_cmd(t_shell *shell, t_cmd_element *input, int ex);
 void			ft_get_blocks(t_cmd_element *input, t_cmd_element **cmd,
 					t_cmd_element **operator, t_cmd_element **nxt_block);
 
 /**  utils.c  **/
 char			*get_new_line(int fd, char *line);
-void			init_redir_fd(t_redir *redir);
-void			set_exit_status(t_shell *shell, int count);
+void			init_redir_fd(t_shell *shell, t_redir *redir);
+int				get_exit_status(t_cmd *cmd);
 
 #endif

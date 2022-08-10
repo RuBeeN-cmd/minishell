@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 16:02:58 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/10 15:56:13 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,17 @@ int	init_redirections(t_shell *shell, t_cmd *cmd)
 {
 	int		count;
 	t_redir	*redir;
-	t_redir	*last_until;
 
-	last_until = NULL;
 	count = -1;
 	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		redir = cmd->redir_tab[count];
-		init_redir_fd(redir);
-		if (redir->type == UNTIL)
-			last_until = redir;
+		init_redir_fd(shell, redir);
 		if (redir->fd == -1)
 			perror(redir->str);
 		if (redir->fd == -1)
 			return (1);
 	}
-	if (last_until)
-		return (handle_until_redirection(shell, cmd, last_until));
 	return (0);
 }
 
@@ -69,13 +63,13 @@ void	close_redirections(t_shell *shell, t_cmd *cmd)
 	int		count;
 	t_redir	*redir;
 
-	if (shell->stdin_dup != -1)
+	if (shell->stdin_dup != -1 && shell->stdin_dup != -2)
 	{
 		dup2(shell->stdin_dup, 0);
 		close(shell->stdin_dup);
 		shell->stdin_dup = -1;
 	}
-	if (shell->stdout_dup != -1)
+	if (shell->stdout_dup != -1 && shell->stdout_dup != -2)
 	{
 		dup2(shell->stdout_dup, 1);
 		close(shell->stdout_dup);
@@ -85,9 +79,9 @@ void	close_redirections(t_shell *shell, t_cmd *cmd)
 	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		redir = cmd->redir_tab[count];
-		if (redir->fd != -1)
+		if (redir->fd != -1 && redir->fd != -2)
 			close(redir->fd);
-		if (redir->fd != -1)
+		if (redir->fd != -1 && redir->fd != -2)
 			redir->fd = -1;
 	}
 }
@@ -114,68 +108,3 @@ char	*find_unused_filename(void)
 	return (NULL);
 }
 
-int	interrupt = 0;
-
-void	sigint_during_heredoc(int signum)
-{
-	if (signum == SIGINT)
-	{
-		close(0);
-		interrupt = 1;
-	}
-}
-
-void	remove_signal_handlers_for_redir()
-{
-	signal(SIGINT, &sigint_during_heredoc);
-}
-
-int	handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until)
-{
-	char	*line;
-	pid_t	pid;
-	
-
-	cmd->tmpfile_name = find_unused_filename();
-	if (!cmd->tmpfile_name)
-		return (1);
-	last_until->fd = open(cmd->tmpfile_name, O_CREAT | O_RDWR | O_EXCL, 0777);
-	if (last_until->fd == -1)
-		perror("open:");
-	if (last_until->fd == -1)
-		return (1);
-	remove_signal_handlers();
-	pid = fork();
-	if (!pid)
-	{
-		remove_signal_handlers_for_redir();
-		interrupt = 0;
-		line = readline("");
-		while (line && ft_strcmp(line, last_until->str) != 0)
-		{
-			ft_printf_fd(last_until->fd, line);
-			ft_printf_fd(last_until->fd, "\n");
-			free(line);
-			line = readline("");
-		}
-		if (!line && !interrupt)
-			ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", last_until->str);
-		else if (line)
-			free(line);
-		close(last_until->fd);
-		destroy_tshell(shell);
-		if (interrupt)
-			exit(3);
-		exit(EXIT_SUCCESS);
-	}
-	waitpid(pid, &cmd->status, 0);
-	if (WEXITSTATUS(cmd->status) == 3)
-	{
-		cmd->interrupt = 1;
-		shell->exit_status = 130;
-	}
-	set_signal_handlers();
-	close(last_until->fd);
-	last_until->fd = open(cmd->tmpfile_name, O_RDONLY | O_CLOEXEC);
-	return (cmd->interrupt);
-}

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:31:29 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 16:48:28 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/10 19:40:07 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ t_shell	*init_tshell(char **env)
 	shell->cmd_tab = NULL;
 	shell->stdin_dup = -1;
 	shell->stdout_dup = -1;
+	shell->interrupt = 0;
 	shell->exit_status = 0;
-	shell->block_left = NULL;
+	shell->tmpfile_list = NULL;
 	init_builtin_list(shell);
 	return (shell);
 }
@@ -44,7 +45,25 @@ void	destroy_tshell(t_shell *shell)
 	if (shell->cmd_tab)
 		ft_destroy_tab((void ***)&shell->cmd_tab,
 			(void (*)(void *))destroy_cmd);
-	if (shell->block_left)
-		destroy_element_list(shell->block_left);
+	if (shell->tmpfile_list)
+		destroy_tmpfile_list(shell);
 	free(shell);
+}
+
+void	destroy_tmpfile_list(t_shell *shell)
+{
+	t_tmpfile	*current;
+	t_tmpfile	*next;
+
+	current = shell->tmpfile_list;
+	while (current)
+	{
+		next = current->next;
+		if (!shell->fork)
+			if (unlink(current->name) == -1)
+				perror("unlink");
+		free(current->name);
+		free(current);
+		current = next;
+	}
 }

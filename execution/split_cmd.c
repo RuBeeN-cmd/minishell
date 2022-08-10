@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:05:15 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 16:51:36 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/10 19:51:58 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_get_blocks(t_cmd_element *input, t_cmd_element **cmd,
 	(*op)->next = NULL;
 }
 
-int	ft_split_cmd(t_shell *shell, t_cmd_element *input)
+int	ft_split_cmd(t_shell *shell, t_cmd_element *input, int ex)
 {
 	t_cmd_element	*op;
 	t_cmd_element	*cmd;
@@ -52,25 +52,19 @@ int	ft_split_cmd(t_shell *shell, t_cmd_element *input)
 	if (!ft_strcmp(op->str, "&&"))
 	{
 		destroy_element(op);
-		shell->block_left = nxt_block;
-		ret = ft_exec_bloc(shell, cmd);
-		shell->block_left = NULL;
-		if (!ret && ret != 130)
-			return (ft_exec_bloc(shell, nxt_block));
-		if (nxt_block)
-			destroy_element_list(nxt_block);
+		ret = ft_exec_bloc(shell, cmd, ex);
+		if (!ret)
+			return (ft_exec_bloc(shell, nxt_block, (ex)));
+		ft_exec_bloc(shell, nxt_block, 0);
 		return (1);
 	}
 	else if (!ft_strcmp(op->str, "||"))
 	{
 		destroy_element(op);
-		shell->block_left = nxt_block;
-		ret = ft_exec_bloc(shell, cmd);
-		shell->block_left = NULL;
-		if (ret && ret != 130)
-			return (ft_exec_bloc(shell, nxt_block));
-		if (nxt_block)
-			destroy_element_list(nxt_block);
+		ret = ft_exec_bloc(shell, cmd, ex);
+		if (ret)
+			return (ft_exec_bloc(shell, nxt_block, ex));
+		ft_exec_bloc(shell, nxt_block, 0);
 		return (1);
 	}
 	return (0);

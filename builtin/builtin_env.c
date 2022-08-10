@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 15:33:41 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/10 14:53:00 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	export(t_shell *shell, int argc, char **argv)
 			exit_status = EXIT_FAILURE;
 		}
 	}
-	return (exit_fork(shell, exit_status));
+	return (exit_status);
 }
 
 int	unset(t_shell *shell, int argc, char **argv)
@@ -67,7 +67,7 @@ int	unset(t_shell *shell, int argc, char **argv)
 	if (argc == 1)
 	{
 		ft_printf_fd(2, "unset: not enough arguments\n");
-		return (exit_fork(shell, exit_status));
+		return (exit_status);
 	}
-	return (exit_fork(shell, exit_status));
+	return (exit_status);
 }

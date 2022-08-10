@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:53:57 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/09 12:25:20 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/10 19:36:10 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ char	*parse_var_call(t_shell *shell, char **str)
 	{
 		str_var = ft_substr(base_str, 0, *str - base_str);
 		if (!ft_strcmp(str_var, "?"))
+		{
+			free(str_var);
 			return (ft_itoa(shell->exit_status));
+		}
 		var = get_env_var(shell, str_var);
 		free(str_var);
 		if (var)

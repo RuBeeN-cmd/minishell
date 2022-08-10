@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/05 10:48:46 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/10 14:58:01 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int	is_syntax_valid(t_cmd_element *list)
 		cur = cur->next;
 	}
 	if (words == 0 || !is_parenthesis_syntax_valid(list))
+	{
+		if (list)
+			ft_printf_fd(2, "Syntax error in command.\n");
 		return (0);
+	}
 	return (1);
 }
 

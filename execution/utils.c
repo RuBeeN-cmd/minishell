@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:58:14 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/05 11:10:02 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/10 18:38:32 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ char	*get_new_line(int fd, char *line)
 	return (readline(""));
 }
 
-void	init_redir_fd(t_redir *redir)
+void	init_redir_fd(t_shell *shell, t_redir *redir)
 {
+	t_tmpfile *next;
+
 	if (redir->type == APPEND)
 		redir->fd = open(redir->str,
 				O_CREAT | O_APPEND | O_RDWR | O_CLOEXEC, 0644);
@@ -30,13 +32,25 @@ void	init_redir_fd(t_redir *redir)
 				O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0644);
 	if (redir->type == IN)
 		redir->fd = open(redir->str, O_RDONLY | O_CLOEXEC);
+	if (redir->type == UNTIL)
+	{
+		if (!shell->tmpfile_list)
+			ft_printf_fd(2, "Tmpfile doesn't exist\n");
+		redir->fd = open(shell->tmpfile_list->name, O_RDONLY | O_CLOEXEC);
+		if (unlink(shell->tmpfile_list->name) == -1)
+			perror("unlink");
+		next = shell->tmpfile_list->next;
+		free(shell->tmpfile_list->name);
+		free(shell->tmpfile_list);
+		shell->tmpfile_list = next;
+	}
 }
 
-void	set_exit_status(t_shell *shell, int count)
+int	get_exit_status(t_cmd *cmd)
 {
-	if (WIFEXITED(shell->cmd_tab[count - 1]->status))
-		shell->exit_status = WEXITSTATUS(shell->cmd_tab[count - 1]->status);
-	else if (WIFSIGNALED(shell->cmd_tab[count - 1]->status))
-		shell->exit_status = 128
-			+ WTERMSIG(shell->cmd_tab[count - 1]->status);
+	if (WIFEXITED(cmd->status))
+		return (WEXITSTATUS(cmd->status));
+	else if (WIFSIGNALED(cmd->status))
+		return (128 + WTERMSIG(cmd->status));
+	return (1);
 }
