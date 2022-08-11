@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 10:31:09 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:23:04 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,26 @@ int				exit_fork(t_shell *shell, int exit_status);
 char			**get_var_export(char *str);
 
 //////////////////////////////////////////////////
+////////////		redirection		//////////////
+//////////////////////////////////////////////////
+
+/**	ttmpfile.c		**/
+t_tmpfile		*init_tmpfile(char *name);
+
+/**	redirection_manager.c	**/
+int				init_redirections(t_shell *shell, t_cmd *cmd);
+void			set_redirections(t_shell *shell, t_cmd *cmd);
+void			close_redirections(t_shell *shell, t_cmd *cmd);
+char			*find_unused_filename(void);
+
+/**until_redirection.c	**/
+void			sigint_during_heredoc(int signum);
+void			remove_signal_handlers_for_heredocs();
+void			create_all_heredocs(t_shell *shell, t_cmd_element *list);
+t_tmpfile		*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list);
+int				heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_element *list);
+
+//////////////////////////////////////////////////
 ////////////		execution  		//////////////
 //////////////////////////////////////////////////
 
@@ -240,23 +260,6 @@ void			execute_cmd(t_shell *shell, t_cmd *cmd);
 char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
 
-/**	redirection_manager.c	**/
-int				init_all_redirections(t_shell *shell);
-void			close_all_redirections(t_shell *shell);
-int				init_redirections(t_shell *shell, t_cmd *cmd);
-void			set_redirections(t_shell *shell, t_cmd *cmd);
-void			close_redirections(t_shell *shell, t_cmd *cmd);
-char			*find_unused_filename(void);
-void			set_redir_signal_handlers(void);
-void			receive_while_untilredir(int signum);
-int				handle_until_redirection(t_shell *shell, t_cmd *cmd, t_redir *last_until);
-
-/**until_redirection.c	**/
-void			sigint_during_heredoc(int signum);
-void			remove_signal_handlers_for_heredocs();
-void			create_all_heredocs(t_shell *shell, t_cmd_element *list);
-t_tmpfile		*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list);
-int				heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_element *list);
 
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);

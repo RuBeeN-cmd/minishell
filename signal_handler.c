@@ -6,11 +6,13 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:36:59 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 14:32:46 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:44:06 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_interrupt;
 
 void	set_signal_handlers(void)
 {
@@ -38,5 +40,6 @@ void	receive(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_interrupt = 1;
 	}
 }

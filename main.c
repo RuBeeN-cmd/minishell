@@ -6,11 +6,23 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:40:26 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 19:48:15 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:44:14 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_interrupt = 0;
+
+static void	handle_interrupt(t_shell *shell)
+{
+	shell->interrupt = 0;
+	if (g_interrupt == 1)
+	{
+		shell->exit_status = 130;
+		g_interrupt = 0;
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -25,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 	str = readline(shell->prompt);
 	while (str)
 	{
-		shell->interrupt = 0;
+		handle_interrupt(shell);
 		list = split_into_element_list(shell, str);
 		if (is_syntax_valid(list))
 		{

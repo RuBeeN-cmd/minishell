@@ -6,20 +6,20 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:09:17 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 18:34:13 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:44:21 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	interrupt = 0;
+extern int	g_interrupt;
 
 void	sigint_during_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
 		close(0);
-		interrupt = 3;
+		g_interrupt = 3;
 	}
 }
 
@@ -39,7 +39,8 @@ void	create_all_heredocs(t_shell *shell, t_cmd_element *list)
 	ret = 0;
 	while (current && !ret)
 	{
-		if (current->type == REDIRECT && !ft_strcmp(current->str, "<<"))
+		if (current->type == REDIRECT && !ft_strcmp(current->str, "<<")
+				&& !shell->interrupt)
 		{
 			new = create_heredoc(shell, current->next->str, list);
 			if (!shell->tmpfile_list)
@@ -62,9 +63,7 @@ t_tmpfile	*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list)
 	pid_t		pid;
 	int			status;
 
-	new_tmpfile = malloc(sizeof(t_tmpfile));
-	new_tmpfile->name = find_unused_filename();
-	new_tmpfile->next = NULL;
+	new_tmpfile = init_tmpfile(find_unused_filename());
 	new_tmpfile->fd = open(new_tmpfile->name, O_CREAT | O_RDWR | O_EXCL, 0777);
 	if (new_tmpfile->fd == -1)
 		perror("open:");
@@ -79,6 +78,8 @@ t_tmpfile	*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list)
 	waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == 3)
 		shell->interrupt = 1;
+	if (WEXITSTATUS(status) == 3)
+		shell->exit_status = 130;
 	set_signal_handlers();
 	close(new_tmpfile->fd);
 	return (new_tmpfile);
@@ -89,7 +90,7 @@ int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_e
 	char	*line;
 
 	remove_signal_handlers_for_heredocs();
-	interrupt = 0;
+	g_interrupt = 0;
 	line = readline("");
 	while (line && ft_strcmp(line, endredir) != 0)
 	{
@@ -98,7 +99,7 @@ int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_e
 		free(line);
 		line = readline("");
 	}
-	if (!line && !interrupt)
+	if (!line && !g_interrupt)
 		ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", endredir);
 	else if (line)
 		free(line);
@@ -107,5 +108,5 @@ int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_e
 	free(new_tmpfile);
 	destroy_element_list(list);
 	destroy_tshell(shell);
-	exit(interrupt);
+	exit(g_interrupt);
 }

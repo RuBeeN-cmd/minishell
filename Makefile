@@ -4,7 +4,7 @@ SRC		=	main.c						signal_handler.c				tshell.c					\
 			tenv/tenv_init.c			tenv/tenv_destroy.c				tenv/tenv_utils.c			\
 			execution/exec.c			execution/check_parenthesis.c	execution/split_cmd.c		\
 			execution/execute_pipelines.c execution/pipe_utils.c		execution/utils.c \
-			redirection/until_redirection.c	redirection/redirection_manager.c	\
+			redirection/until_redirection.c	redirection/redirection_manager.c	redirection/ttmpfile.c	\
 			cmdparsing/t_cmd_element.c	cmdparsing/cmd_splitting.c		cmdparsing/cmd_wildcards.c	\
 			cmdparsing/cmd_syntax_check.c	cmdparsing/tcmd.c			cmdparsing/cmd_parse_final.c cmdparsing/utils.c
 OBJ 	=	$(SRC:%.c=%.o)
