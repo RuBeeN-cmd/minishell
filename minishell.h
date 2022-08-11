@@ -6,21 +6,16 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:33:23 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:40:48 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
 # include <termios.h>
-# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <libft.h>
 # include <dirent.h>
@@ -28,7 +23,7 @@
 # include <errno.h>
 
 # define BUILTIN_NB	7
-# define PARENTHESIS_NB	20
+# define PARENTHESIS_NB	100
 
 typedef struct s_env_var {
 	char	*name;
