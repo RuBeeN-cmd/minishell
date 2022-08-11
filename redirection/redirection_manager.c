@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 15:56:13 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:03:37 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,3 @@ char	*find_unused_filename(void)
 	ft_printf_fd(2, "Unused filename for tmpfile not found");
 	return (NULL);
 }
-

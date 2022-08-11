@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 15:23:04 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:01:30 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,8 @@ int				env(t_shell *shell, int argc, char **argv);
 int				export(t_shell *shell, int argc, char **argv);
 
 /**	builtin_utils.c		**/
-void			replace_old_pwd(t_shell *shell, t_env_var *pwd, t_env_var *old_pwd);
+void			replace_old_pwd(t_shell *shell, t_env_var *pwd,
+					t_env_var *old_pwd);
 int				ft_isnumber(const char *str);
 void			crea_mod_env_var(t_shell *shell, char *str);
 int				check_n_flag(char **argv, int *i);
@@ -244,10 +245,12 @@ char			*find_unused_filename(void);
 
 /**until_redirection.c	**/
 void			sigint_during_heredoc(int signum);
-void			remove_signal_handlers_for_heredocs();
+void			remove_signal_handlers_for_heredocs(void);
 void			create_all_heredocs(t_shell *shell, t_cmd_element *list);
-t_tmpfile		*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list);
-int				heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_element *list);
+t_tmpfile		*create_heredoc(t_shell *shell, char *endredir,
+					t_cmd_element *list);
+int				heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile,
+					char *endredir, t_cmd_element *list);
 
 //////////////////////////////////////////////////
 ////////////		execution  		//////////////
@@ -259,7 +262,6 @@ void			fork_cmd(t_shell *shell, t_cmd *cmd, int *input, int *output);
 void			execute_cmd(t_shell *shell, t_cmd *cmd);
 char			*search_executable_path(t_shell *shell, char *exec);
 char			*try_path(char *path, char *exec);
-
 
 /**	pipe_utils.c		**/
 void			copy_pipe_from(int *dest, int *src);

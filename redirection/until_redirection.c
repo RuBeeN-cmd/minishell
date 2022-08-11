@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:09:17 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 15:44:21 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:03:20 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sigint_during_heredoc(int signum)
 	}
 }
 
-void	remove_signal_handlers_for_heredocs()
+void	remove_signal_handlers_for_heredocs(void)
 {
 	signal(SIGINT, &sigint_during_heredoc);
 }
@@ -40,7 +40,7 @@ void	create_all_heredocs(t_shell *shell, t_cmd_element *list)
 	while (current && !ret)
 	{
 		if (current->type == REDIRECT && !ft_strcmp(current->str, "<<")
-				&& !shell->interrupt)
+			&& !shell->interrupt)
 		{
 			new = create_heredoc(shell, current->next->str, list);
 			if (!shell->tmpfile_list)
@@ -85,7 +85,8 @@ t_tmpfile	*create_heredoc(t_shell *shell, char *endredir, t_cmd_element *list)
 	return (new_tmpfile);
 }
 
-int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_element *list)
+int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir,
+		t_cmd_element *list)
 {
 	char	*line;
 
@@ -100,7 +101,9 @@ int	heredoc_fork(t_shell *shell, t_tmpfile *new_tmpfile, char *endredir, t_cmd_e
 		line = readline("");
 	}
 	if (!line && !g_interrupt)
-		ft_printf_fd(2, "warning : here-document delimited by EOF (wanted '%s')\n", endredir);
+		ft_printf_fd(2,
+			"warning : here-document delimited by EOF(wanted '%s')\n",
+			endredir);
 	else if (line)
 		free(line);
 	close(new_tmpfile->fd);
