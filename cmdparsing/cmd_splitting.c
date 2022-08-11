@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:29:31 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:33:46 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,15 +122,7 @@ int	*detect_wildcards(int *wildcards, char *str_parsed, char *to_add)
 	int		count;
 	int		*new_wc;
 
-	count = 0;
-	while (wildcards && wildcards[count] != -1)
-		count++;
-	wc = ft_strchr(to_add, '*');
-	while (wc)
-	{
-		wc = ft_strchr(wc + 1, '*');
-		count++;
-	}
+	count = get_nb_wildcard(wildcards, to_add);
 	new_wc = malloc(sizeof(int) * (count + 1));
 	count = -1;
 	while (++count != -1 && wildcards && wildcards[count] != -1)

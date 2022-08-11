@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:53:57 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/11 18:31:34 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:33:31 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,21 @@ void	detatch_pipe(t_cmd_element **current, t_cmd_element **list_start,
 		destroy_element_list(*list_start);
 		*list_start = *current;
 	}
+}
+
+int	get_nb_wildcard(int *wildcards, char *to_add)
+{
+	char	*wc;
+	int		count;
+
+	count = 0;
+	while (wildcards && wildcards[count] != -1)
+		count++;
+	wc = ft_strchr(to_add, '*');
+	while (wc)
+	{
+		wc = ft_strchr(wc + 1, '*');
+		count++;
+	}
+	return (count);
 }
