@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:05:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/05 10:49:00 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:29:57 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	if (wc_pos[0] == -1)
 	{
 		free(wc_pos);
-		return (init_element(str, WORD));
+		return (init_element(str, e_word));
 	}
 	count = 0;
 	while (wc_pos[count] != -1)
@@ -36,7 +36,7 @@ t_cmd_element	*build_new_elements(char *str, int *wc_pos)
 	ft_sort_tab_alpha(matching_files);
 	free(wc);
 	if (!matching_files)
-		return (init_element(str, WORD));
+		return (init_element(str, e_word));
 	free(str);
 	return (build_elements_from_matches(matching_files));
 }
@@ -54,7 +54,7 @@ t_cmd_element	*build_elements_from_matches(char **matching_files)
 	first = NULL;
 	while (matching_files[++count])
 	{
-		current = init_element(matching_files[count], WORD);
+		current = init_element(matching_files[count], e_word);
 		if (previous)
 			previous->next = current;
 		previous = current;

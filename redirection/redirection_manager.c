@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:11:50 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:03:37 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:26:13 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	set_redirections(t_shell *shell, t_cmd *cmd)
 	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		redir = cmd->redir_tab[count];
-		if (redir->type == APPEND || redir->type == REPLACE)
+		if (redir->type == e_append || redir->type == e_replace)
 			last_out = redir;
-		else if (redir->type == IN || redir->type == UNTIL)
+		else if (redir->type == e_in || redir->type == e_until)
 			last_in = redir;
 	}
 	if (last_out)

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:04:22 by rrollin           #+#    #+#             */
-/*   Updated: 2022/07/26 16:15:46 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:28:13 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	got_parenthesis(t_cmd_element *input)
 {
-	return (input->type == PARENTHESIS
+	return (input->type == e_par
 		&& !ft_strcmp((const char *) input->str, "("));
 }
 
@@ -30,7 +30,7 @@ void	remove_parenthesis(t_cmd_element **input)
 	nb_parenthesis = 1;
 	while (tmp->next)
 	{
-		if (tmp->next->type == PARENTHESIS)
+		if (tmp->next->type == e_par)
 		{
 			nb_parenthesis += 1 * !ft_strcmp((const char *) tmp->next->str, "(")
 				+ -1 * !!ft_strcmp((const char *) tmp->next->str, "(");
@@ -53,7 +53,7 @@ void	remove_pipe_parenthesis(t_cmd_element **input)
 	tmp = *input;
 	while (*input)
 	{
-		if ((*input)->type == PIPE)
+		if ((*input)->type == e_pipe)
 			if (got_parenthesis((*input)->next))
 				remove_parenthesis(&((*input)->next));
 		*input = (*input)->next;

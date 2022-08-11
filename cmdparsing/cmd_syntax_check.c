@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:17:25 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:31:15 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	is_syntax_valid(t_cmd_element *list)
 	ret = 1;
 	while (cur)
 	{
-		if (cur->type == WORD)
+		if (cur->type == e_word)
 			words++;
-		if (cur->type == REDIRECT && (!cur->next || cur->next->type != WORD))
+		if (cur->type == e_redir && (!cur->next || cur->next->type != e_word))
 			ret = 0;
-		if ((cur->type == OPERATOR || cur->type == PIPE) && !words)
+		if ((cur->type == e_oper || cur->type == e_pipe) && !words)
 			ret = 0;
-		if (cur->type == OPERATOR || cur->type == PIPE)
+		if (cur->type == e_oper || cur->type == e_pipe)
 			words = 0;
 		cur = cur->next;
 	}
@@ -68,15 +68,15 @@ static	int	are_parenthesis_in_between_operators(t_cmd_element *list)
 	cur = list;
 	while (cur)
 	{
-		if (cur->type == PARENTHESIS)
+		if (cur->type == e_par)
 		{
-			if (!ft_strcmp(cur->str, "(") && prev && prev->type != OPERATOR
-				&& (prev->type != PARENTHESIS
+			if (!ft_strcmp(cur->str, "(") && prev && prev->type != e_oper
+				&& (prev->type != e_par
 					|| !!ft_strcmp(prev->str, "(")))
 				return (0);
 			else if (!ft_strcmp(cur->str, ")") && cur->next
-				&& cur->next->type != OPERATOR
-				&& (cur->next->type != PARENTHESIS
+				&& cur->next->type != e_oper
+				&& (cur->next->type != e_par
 					|| !!ft_strcmp(cur->next->str, ")")))
 				return (0);
 		}
@@ -97,17 +97,17 @@ int	is_parenthesis_syntax_valid(t_cmd_element *list)
 	cur = list;
 	while (cur)
 	{
-		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, "(") && par >= -1)
+		if (cur->type == e_par && !ft_strcmp(cur->str, "(") && par >= -1)
 			words[++par] = 0;
-		if (cur->type == WORD && cur->next && cur->next->type == PARENTHESIS
+		if (cur->type == e_word && cur->next && cur->next->type == e_par
 			&& !ft_strcmp(cur->next->str, "("))
 			return (0);
-		if (cur->type == WORD && par > -1)
+		if (cur->type == e_word && par > -1)
 			add_word_to_parenthesis((int *)words, par);
-		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, ")")
+		if (cur->type == e_par && !ft_strcmp(cur->str, ")")
 			&& (par < 0 || words[par] == 0))
 			return (0);
-		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, ")"))
+		if (cur->type == e_par && !ft_strcmp(cur->str, ")"))
 			words[par--] = -1;
 		cur = cur->next;
 	}

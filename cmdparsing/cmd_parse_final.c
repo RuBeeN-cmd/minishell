@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:22:28 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/05 11:20:10 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:31:29 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cmd	*parse_single_cmd(t_cmd_element *list)
 	previous = NULL;
 	while (current)
 	{
-		if (current->type == WORD && (!previous || previous->type != REDIRECT))
+		if (current->type == e_word && (!previous || previous->type != e_redir))
 			ft_tab_insert((void ***)&(cmd->argv),
 				cmd->argc++, ft_strdup(current->str));
 		previous = current;
@@ -67,7 +67,7 @@ t_redir	**parse_redirections(t_cmd_element *list)
 	redir_tab = NULL;
 	while (current)
 	{
-		if (current->type == REDIRECT)
+		if (current->type == e_redir)
 			ft_tab_insert((void ***)&redir_tab, count++,
 				init_redir(current->next->str, current->str));
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:53:57 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/11 18:31:11 by rrollin          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:33:31 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	print_element_list(t_cmd_element *elem)
 void	detatch_pipe(t_cmd_element **current, t_cmd_element **list_start,
 	t_cmd ***tab, int *count)
 {
-	if ((*current)->type == PIPE)
+	if ((*current)->type == e_pipe)
 	{
 		*current = detach_element(list_start, *current);
 		ft_tab_insert((void ***)tab, (*count)++,

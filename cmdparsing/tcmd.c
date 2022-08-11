@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:36:31 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 11:38:30 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:26:43 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	print_cmd(t_cmd *cmd)
 	while (cmd->redir_tab && cmd->redir_tab[++count])
 	{
 		printf("\t\tType\t");
-		if (cmd->redir_tab[count]->type == REPLACE)
+		if (cmd->redir_tab[count]->type == e_replace)
 			printf("Replace");
-		if (cmd->redir_tab[count]->type == APPEND)
+		if (cmd->redir_tab[count]->type == e_append)
 			printf("Append");
-		if (cmd->redir_tab[count]->type == IN)
+		if (cmd->redir_tab[count]->type == e_in)
 			printf("Infile");
-		if (cmd->redir_tab[count]->type == UNTIL)
+		if (cmd->redir_tab[count]->type == e_until)
 			printf("Until");
 		printf("\t\t\tValue\t%s\n", cmd->redir_tab[count]->str);
 	}
@@ -76,13 +76,13 @@ t_redir	*init_redir(char *str, char *redir_type)
 	redir->str = ft_strdup(str);
 	redir->fd = -2;
 	if (!ft_strcmp(redir_type, ">"))
-		redir->type = REPLACE;
+		redir->type = e_replace;
 	else if (!ft_strcmp(redir_type, ">>"))
-		redir->type = APPEND;
+		redir->type = e_append;
 	else if (!ft_strcmp(redir_type, "<"))
-		redir->type = IN;
+		redir->type = e_in;
 	else if (!ft_strcmp(redir_type, "<<"))
-		redir->type = UNTIL;
+		redir->type = e_until;
 	return (redir);
 }
 

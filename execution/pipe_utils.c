@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 18:58:58 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/04 15:21:26 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:28:32 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_pipes(t_cmd_element *list)
 	current = list;
 	while (current)
 	{
-		if (current->type == PIPE)
+		if (current->type == e_pipe)
 			pipes++;
 		current = current->next;
 	}
