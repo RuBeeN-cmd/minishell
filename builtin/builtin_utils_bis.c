@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:05:08 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/10 14:51:41 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 17:59:56 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,3 @@ char	**get_var_export(char *str)
 	var[2] = NULL;
 	return (var);
 }
-
-
