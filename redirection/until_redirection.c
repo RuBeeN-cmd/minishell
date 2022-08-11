@@ -6,7 +6,7 @@
 /*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:09:17 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:03:20 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:28:38 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	create_all_heredocs(t_shell *shell, t_cmd_element *list)
 	ret = 0;
 	while (current && !ret)
 	{
-		if (current->type == REDIRECT && !ft_strcmp(current->str, "<<")
+		if (current->type == e_redir && !ft_strcmp(current->str, "<<")
 			&& !shell->interrupt)
 		{
 			new = create_heredoc(shell, current->next->str, list);

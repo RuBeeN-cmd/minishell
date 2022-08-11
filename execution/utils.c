@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:58:14 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/11 18:12:58 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:25:57 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	init_redir_fd(t_shell *shell, t_redir *redir)
 {
 	t_tmpfile	*next;
 
-	if (redir->type == APPEND)
+	if (redir->type == e_append)
 		redir->fd = open(redir->str,
 				O_CREAT | O_APPEND | O_RDWR | O_CLOEXEC, 0644);
-	if (redir->type == REPLACE)
+	if (redir->type == e_replace)
 		redir->fd = open(redir->str,
 				O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0644);
-	if (redir->type == IN)
+	if (redir->type == e_in)
 		redir->fd = open(redir->str, O_RDONLY | O_CLOEXEC);
-	if (redir->type == UNTIL)
+	if (redir->type == e_until)
 	{
 		if (!shell->tmpfile_list)
 			ft_printf_fd(2, "Tmpfile doesn't exist\n");

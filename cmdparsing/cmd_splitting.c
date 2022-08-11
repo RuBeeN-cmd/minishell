@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 14:38:23 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:29:31 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,22 @@ t_cmd_element	*parse_element_at(t_shell *shell, char **str)
 	int			length;
 
 	if (ft_str_contains("><", **str))
-		type = REDIRECT;
+		type = e_redir;
 	else if (ft_str_contains("&|", **str) && (*str)[0] == (*str)[1])
-		type = OPERATOR;
+		type = e_oper;
 	else if (ft_str_contains("()", **str))
-		type = PARENTHESIS;
+		type = e_par;
 	else if (**str == '|')
-		type = PIPE;
+		type = e_pipe;
 	else
-		type = WORD;
-	if (type == PIPE || type == PARENTHESIS
-		|| (type == REDIRECT && (*str)[0] != (*str)[1])
-		|| (type == WORD && **str == '&'))
+		type = e_word;
+	if (type == e_pipe || type == e_par
+		|| (type == e_redir && (*str)[0] != (*str)[1])
+		|| (type == e_word && **str == '&'))
 		length = 1;
-	else if (type != WORD)
+	else if (type != e_word)
 		length = 2;
-	else if (type == WORD && **str != '&')
+	else if (type == e_word && **str != '&')
 		return (parse_word_element(shell, str));
 	*str += length;
 	return (init_element(ft_substr(*str - length, 0, length), type));

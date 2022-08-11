@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:32:11 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 16:52:37 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:28:54 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ t_cmd_element	*detach_element(t_cmd_element **list, t_cmd_element *elem)
 void	print_element(t_cmd_element *elem)
 {
 	printf("\tType :\t\t");
-	if (elem->type == WORD)
+	if (elem->type == e_word)
 		printf("Word\n");
-	else if (elem->type == REDIRECT)
+	else if (elem->type == e_redir)
 		printf("Redirect\n");
-	else if (elem->type == OPERATOR)
+	else if (elem->type == e_oper)
 		printf("Binary operator\n");
-	else if (elem->type == PIPE)
+	else if (elem->type == e_pipe)
 		printf("Pipe\n");
-	else if (elem->type == PARENTHESIS)
+	else if (elem->type == e_par)
 		printf("Parenthesis\n");
 	else
 		printf("Unknown");

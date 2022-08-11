@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:01:30 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:27:44 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct s_builtin {
 }				t_builtin;
 
 typedef enum e_redir_type {
-	APPEND,
-	REPLACE,
-	IN,
-	UNTIL
+	e_append,
+	e_replace,
+	e_in,
+	e_until
 }				t_redir_type;
 
 typedef struct s_redir
@@ -74,12 +74,12 @@ typedef struct s_cmd {
 }				t_cmd;
 
 typedef enum e_elem_type {
-	WORD,
-	REDIRECT,
-	OPERATOR,
-	PIPE,
-	PARENTHESIS,
-	WILDCARD
+	e_word,
+	e_redir,
+	e_oper,
+	e_pipe,
+	e_par,
+	e_wildcard
 }			t_elem_type;
 
 typedef struct s_cmd_element {

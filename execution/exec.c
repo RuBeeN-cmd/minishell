@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/11 11:44:44 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:27:59 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_single_cmd(t_cmd_element *cmd)
 {
 	while (cmd)
 	{
-		if (cmd->type == OPERATOR)
+		if (cmd->type == e_oper)
 			return (0);
 		cmd = cmd->next;
 	}

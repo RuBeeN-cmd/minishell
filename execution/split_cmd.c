@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:05:15 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/11 18:12:30 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:28:28 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_get_blocks(t_cmd_element *input, t_cmd_element **cmd,
 	is_in_parenthesis = 0;
 	*cmd = input;
 	tmp = NULL;
-	if (input->type == PARENTHESIS)
+	if (input->type == e_par)
 		is_in_parenthesis++;
 	while (input->next)
 	{
-		if (input->next->type == OPERATOR && !is_in_parenthesis)
+		if (input->next->type == e_oper && !is_in_parenthesis)
 			tmp = input;
-		else if (input->next->type == PARENTHESIS)
+		else if (input->next->type == e_par)
 		{
 			if (!ft_strcmp((const char *) input->next->str, "("))
 				is_in_parenthesis++;
