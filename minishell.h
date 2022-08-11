@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 18:01:30 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:31:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ char			*parse_var_call(t_shell *shell, char **str);
 void			print_element_list(t_cmd_element *elem);
 void			detatch_pipe(t_cmd_element **current,
 					t_cmd_element **list_start, t_cmd ***tab, int *count);
+int				get_nb_wildcard(int *wildcards, char *to_add);
 
 //////////////////////////////////////////////////
 ////////////		built in		//////////////
