@@ -27,8 +27,7 @@ clean	:
 	rm -f $(OBJ)
 	make -C libft clean
 
-ctags	:
-	ctags -R * **/*
+bonus	: re
 
 fclean	:	clean
 	rm -rf $(NAME)
