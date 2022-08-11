@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:43:42 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 19:51:46 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 10:31:09 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_shell {
 	t_builtin		*builtin_list[BUILTIN_NB + 1];
 	t_cmd			**cmd_tab;
 	t_env_var		**env;
+	t_cmd_element	**elem_left;
 	t_tmpfile		*tmpfile_list;
 }				t_shell;
 

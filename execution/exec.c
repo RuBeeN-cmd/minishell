@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:22:45 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/10 19:50:08 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 11:44:44 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	is_single_cmd(t_cmd_element *cmd)
 
 int	ft_exec_bloc(t_shell *shell, t_cmd_element *input, int ex)
 {
-	if (got_parenthesis(input))
+	while (got_parenthesis(input))
 		remove_parenthesis(&input);
 	remove_pipe_parenthesis(&input);
 	if (is_single_cmd(input))

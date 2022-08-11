@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 14:58:01 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 12:14:42 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,76 @@ int	is_syntax_valid(t_cmd_element *list)
 	return (1);
 }
 
+static void	add_word_to_parenthesis(int	*words, int parenthesis)
+{
+	int	count;
+
+	count = parenthesis;
+	while (count >= 0)
+		words[count--] += 1;
+}
+
+static void	init_words(int *words)
+{
+	int	count;
+
+	count = -1;
+	while (++count < PARENTHESIS_NB)
+		words[count] = -1;
+}
+
+static	int	are_parenthesis_in_between_operators(t_cmd_element *list)
+{
+	t_cmd_element	*cur;
+	t_cmd_element	*prev;
+
+	prev = NULL;
+	cur = list;
+	while (cur)
+	{
+		if (cur->type == PARENTHESIS)
+		{
+			if (!ft_strcmp(cur->str, "(") && prev && prev->type != OPERATOR
+				&& (prev->type != PARENTHESIS
+					|| !!ft_strcmp(prev->str, "(")))
+				return (0);
+			else if (!ft_strcmp(cur->str, ")") && cur->next &&
+					cur->next->type != OPERATOR &&
+					(cur->next->type != PARENTHESIS 
+						|| !!ft_strcmp(cur->next->str, ")")))
+				return (0);
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+	return (1);
+}
+
 int	is_parenthesis_syntax_valid(t_cmd_element *list)
 {
 	t_cmd_element	*cur;
 	int				words[PARENTHESIS_NB];
-	int				parenthesis;
+	int				par;
 
-	parenthesis = -1;
-	while (++parenthesis < PARENTHESIS_NB)
-		words[parenthesis] = -1;
-	parenthesis = -1;
+	init_words((int *)words);
+	par = -1;
 	cur = list;
 	while (cur)
 	{
-		if (cur->type == PARENTHESIS
-			&& !ft_strcmp(cur->str, "(") && parenthesis >= -1)
-			words[++parenthesis] = 0;
+		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, "(") && par >= -1)
+			words[++par] = 0;
 		if (cur->type == WORD && cur->next && cur->next->type == PARENTHESIS
 			&& !ft_strcmp(cur->next->str, "("))
 			return (0);
-		if (cur->type == WORD && parenthesis > -1)
-			words[parenthesis] += 1;
+		if (cur->type == WORD && par > -1)
+			add_word_to_parenthesis((int *)words, par);
 		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, ")")
-			&& (parenthesis < 0 || words[parenthesis] == 0))
+			&& (par < 0 || words[par] == 0))
 			return (0);
 		if (cur->type == PARENTHESIS && !ft_strcmp(cur->str, ")"))
-			words[parenthesis--] = -1;
+			words[par--] = -1;
 		cur = cur->next;
 	}
-	return (parenthesis == -1);
+	return (par == -1 && are_parenthesis_in_between_operators(list));
 }
+

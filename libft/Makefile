@@ -15,7 +15,7 @@ SRC		=	ft_isalnum.c 		ft_isalpha.c	ft_isascii.c	ft_isdigit.c	\
 			ft_strchr_any.c		ft_strjoin_free.c				ft_strnjoin.c \
 			ft_lower.c			ft_bigger.c		ft_strsubstr.c 	ft_destroy_tab.c\
 			ft_strstr.c			ft_tab_insert_last.c			ft_tabdup.c		\
-			ft_tabsort.c	\
+			ft_tabsort.c		ft_tab_remove.c	\
 			printf/parsing.c	printf/formatting.c		printf/ft_printf.c	\
 			printf/arg_utils.c	printf/printing.c		printf/string_utils.c	\
 			printf/value_to_str.c printf/ft_printf_fd.c \
