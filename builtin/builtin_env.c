@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:24:46 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/10 14:53:00 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:53:36 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,6 @@ int	unset(t_shell *shell, int argc, char **argv)
 			ft_printf_fd(2, "unset: '%s': not a valid identifier\n", argv[i]);
 			exit_status = EXIT_FAILURE;
 		}
-	}
-	if (argc == 1)
-	{
-		ft_printf_fd(2, "unset: not enough arguments\n");
-		return (exit_status);
 	}
 	return (exit_status);
 }

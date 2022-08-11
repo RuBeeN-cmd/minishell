@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 14:50:33 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:57:14 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_syntax_valid(t_cmd_element *list)
 			words = 0;
 		cur = cur->next;
 	}
-	ret = ret && (words == 0 || !is_parenthesis_syntax_valid(list));
+	ret = ret && words != 0 && is_parenthesis_syntax_valid(list);
 	if (!ret && list)
 		ft_printf_fd(2, "Syntax error in command.\n");
 	if (!ret && list)
