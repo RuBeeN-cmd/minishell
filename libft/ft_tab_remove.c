@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab_remove.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:21:53 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 10:48:15 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:17:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,7 @@ void	ft_tab_remove(void ***tab, void *to_remove)
 	int		length;
 	int		count;
 
-	if (!to_remove || !tab || !(*tab))
-		return ;
-	count = -1;
-	length = 0;
-	while ((*tab)[++count])
-		if (to_remove == (*tab)[count])
-			length = -1;
-	if (!length)
+	if (!to_remove || !tab || !(*tab) || !ft_tab_contains(tab, to_remove))
 		return ;
 	length = ft_tablen((const void **)*tab);
 	new = malloc(sizeof(void *) * length);

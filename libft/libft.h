@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 13:57:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 10:32:52 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:16:41 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	ft_tab_insert_last(void ***tab, void *to_insert);
 void	ft_tab_remove(void ***tab, void *to_remove);
 void	**ft_tabdup(void **tab);
 void	ft_tabsort(void **tab, int (*cmp)(void *, void *));
+int		ft_tab_contains(void ***tab, void *elem);
 
 /**	Maths utils **/
 int		ft_lower(int a, int b);

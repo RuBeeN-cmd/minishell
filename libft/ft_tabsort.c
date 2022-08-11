@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tabsort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: johrober <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:44:16 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/09 14:58:14 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:03:34 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_tabsort(void **tab, int (*cmp)(void *, void *))
 {
-	int 	i;
+	int		i;
 	int		sorted;
 	void	*buffer;
 
