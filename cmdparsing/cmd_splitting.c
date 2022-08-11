@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 12:16:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/08 12:57:42 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:38:23 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ t_cmd_element	*parse_element_at(t_shell *shell, char **str)
 	else
 		type = WORD;
 	if (type == PIPE || type == PARENTHESIS
-		|| (type == REDIRECT && (*str)[0] != (*str)[1]))
+		|| (type == REDIRECT && (*str)[0] != (*str)[1])
+		|| (type == WORD && **str == '&'))
 		length = 1;
 	else if (type != WORD)
 		length = 2;
-	else
+	else if (type == WORD && **str != '&')
 		return (parse_word_element(shell, str));
 	*str += length;
 	return (init_element(ft_substr(*str - length, 0, length), type));

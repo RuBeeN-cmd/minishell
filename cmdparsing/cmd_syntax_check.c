@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 12:02:52 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/11 12:14:42 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:50:33 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@ int	is_syntax_valid(t_cmd_element *list)
 {
 	t_cmd_element	*cur;
 	int				words;
+	int				ret;
 
 	cur = list;
 	words = 0;
+	ret = 1;
 	while (cur)
 	{
 		if (cur->type == WORD)
 			words++;
 		if (cur->type == REDIRECT && (!cur->next || cur->next->type != WORD))
-			return (0);
+			ret = 0;
 		if ((cur->type == OPERATOR || cur->type == PIPE) && !words)
-			return (0);
+			ret = 0;
 		if (cur->type == OPERATOR || cur->type == PIPE)
 			words = 0;
 		cur = cur->next;
 	}
-	if (words == 0 || !is_parenthesis_syntax_valid(list))
-	{
-		if (list)
-			ft_printf_fd(2, "Syntax error in command.\n");
-		return (0);
-	}
-	return (1);
+	ret = ret && (words == 0 || !is_parenthesis_syntax_valid(list));
+	if (!ret && list)
+		ft_printf_fd(2, "Syntax error in command.\n");
+	if (!ret && list)
+		destroy_element_list(list);
+	return (ret);
 }
 
 static void	add_word_to_parenthesis(int	*words, int parenthesis)
