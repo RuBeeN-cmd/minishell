@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 10:58:14 by rrollin           #+#    #+#             */
-/*   Updated: 2022/08/10 18:38:32 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:12:58 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_new_line(int fd, char *line)
 
 void	init_redir_fd(t_shell *shell, t_redir *redir)
 {
-	t_tmpfile *next;
+	t_tmpfile	*next;
 
 	if (redir->type == APPEND)
 		redir->fd = open(redir->str,
