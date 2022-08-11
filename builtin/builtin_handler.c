@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:42:07 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 18:41:57 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:03:06 by rrollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void	destroy_builtin_list(t_shell *shell)
 		free(shell->builtin_list[count]);
 }
 
+int	close_redir_exit(t_shell *shell, t_cmd *cmd, int ret)
+{
+	close_redirections(shell, cmd);
+	destroy_tshell(shell);
+	exit(ret);
+}
+
 int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 {
 	int			count;
@@ -64,11 +71,7 @@ int	call_builtin_if_exists(t_shell *shell, t_cmd *cmd)
 	if (cmd->argc > 0 && !ret)
 		ret = builtin->f(shell, cmd->argc, cmd->argv);
 	if (shell->fork)
-	{
-		close_redirections(shell, cmd);
-		destroy_tshell(shell);
-		exit(ret);
-	}
+		close_redir_exit(shell, cmd, ret);
 	if (cmd->interrupt)
 		shell->exit_status = 130;
 	close_redirections(shell, cmd);
