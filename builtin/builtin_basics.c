@@ -6,7 +6,7 @@
 /*   By: rrollin <rrollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:33:38 by johrober          #+#    #+#             */
-/*   Updated: 2022/08/10 14:52:23 by johrober         ###   ########.fr       */
+/*   Updated: 2022/08/12 11:19:09 by johrober         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,26 @@ int	cd(t_shell *shell, int argc, char **argv)
 	int			ret;
 	t_env_var	*pwd;
 	t_env_var	*old_pwd;
-	char		*path;
 	char		*value;
 
 	if (argc == 2)
 	{
 		pwd = get_env_var(shell, "PWD");
 		old_pwd = get_env_var(shell, "OLDPWD");
-		path = argv[1];
-		ret = chdir(path);
+		ret = chdir(argv[1]);
+		if (ret == -1)
+			perror("cd");
+		if (ret == -1)
+			return (EXIT_FAILURE);
 		replace_old_pwd(shell, pwd, old_pwd);
 		value = NULL;
 		value = getcwd(value, 0);
 		if (!pwd)
 			pwd = add_env_var(shell, ft_strdup("PWD"), value);
 		pwd->value = value;
-		if (ret != -1)
-			return (EXIT_SUCCESS);
-		perror("cd");
+		return (EXIT_SUCCESS);
 	}
-	else
-		ft_printf_fd(2, "cd: wrong number of arguments\n");
+	ft_printf_fd(2, "cd: wrong number of arguments\n");
 	return (EXIT_FAILURE);
 }
 
